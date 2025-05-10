@@ -35,7 +35,8 @@ RUN apt-get update -qq && \
     git \
     libyaml-dev \
     pkg-config \
-    libmsgpack-dev && \
+    libmsgpack-dev \
+    cmake && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Install application gems
