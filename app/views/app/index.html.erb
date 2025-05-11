@@ -1,3 +1,88 @@
-<h1 class="text-3xl font-bold text-center mt-10">
-  Hello from 8000000bit.app 👋
-</h1>
+<div class="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-lg mt-10">
+  <h1 class="text-3xl font-bold text-center mb-8">
+    Hello from 8000000bit.app 👋
+  </h1>
+  
+  <div class="mb-6 p-4 bg-gray-50 rounded-md">
+    <h2 class="text-xl font-semibold mb-3">あなたの情報</h2>
+    <div id="first-visit" class="mb-2">初回アクセス日: <span class="font-medium">読み込み中...</span></div>
+    <div id="location-info" class="mb-2">位置情報: <span class="font-medium">読み込み中...</span></div>
+  </div>
+  
+  <div class="text-center">
+    <button id="get-location" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+      位置情報を更新する
+    </button>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // 初回アクセス日の管理
+    const firstVisitElement = document.getElementById('first-visit');
+    const firstVisitDate = localStorage.getItem('8000000bit_first_visit');
+    
+    if (!firstVisitDate) {
+      // 初回アクセスの場合は現在の日時を保存
+      const now = new Date();
+      const formattedDate = now.toLocaleString('ja-JP');
+      localStorage.setItem('8000000bit_first_visit', formattedDate);
+      firstVisitElement.querySelector('span').textContent = formattedDate + ' (今回が初めてのアクセスです)';
+    } else {
+      // 過去にアクセスしたことがある場合
+      firstVisitElement.querySelector('span').textContent = firstVisitDate;
+    }
+    
+    // 位置情報の取得と表示
+    const locationElement = document.getElementById('location-info');
+    const locationButton = document.getElementById('get-location');
+    
+    // 保存済みの位置情報があれば表示
+    const savedLocation = localStorage.getItem('8000000bit_location');
+    if (savedLocation) {
+      locationElement.querySelector('span').textContent = savedLocation;
+    } else {
+      locationElement.querySelector('span').textContent = '未取得 (下のボタンをクリックして取得してください)';
+    }
+    
+    // 位置情報取得ボタンのイベントリスナー
+    locationButton.addEventListener('click', function() {
+      if (navigator.geolocation) {
+        locationElement.querySelector('span').textContent = '位置情報を取得中...';
+        
+        navigator.geolocation.getCurrentPosition(
+          // 成功時
+          function(position) {
+            const latitude = position.coords.latitude.toFixed(6);
+            const longitude = position.coords.longitude.toFixed(6);
+            const locationText = `緯度: ${latitude}, 経度: ${longitude}`;
+            
+            // 位置情報をローカルストレージに保存
+            localStorage.setItem('8000000bit_location', locationText);
+            locationElement.querySelector('span').textContent = locationText;
+          },
+          // 失敗時
+          function(error) {
+            let errorMessage;
+            switch(error.code) {
+              case error.PERMISSION_DENIED:
+                errorMessage = '位置情報の取得が許可されていません';
+                break;
+              case error.POSITION_UNAVAILABLE:
+                errorMessage = '位置情報が取得できませんでした';
+                break;
+              case error.TIMEOUT:
+                errorMessage = '位置情報の取得がタイムアウトしました';
+                break;
+              default:
+                errorMessage = '不明なエラーが発生しました';
+            }
+            locationElement.querySelector('span').textContent = errorMessage;
+          }
+        );
+      } else {
+        locationElement.querySelector('span').textContent = 'お使いのブラウザは位置情報の取得に対応していません';
+      }
+    });
+  });
+</script>
