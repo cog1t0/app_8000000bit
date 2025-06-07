@@ -1,0 +1,74 @@
+<div class="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-lg mt-10">
+  <h1 class="text-3xl font-bold text-center mb-8">周辺の歴史を検索</h1>
+
+  <div class="mb-6 text-center">
+    <button id="history-location" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+      現在地から探す
+    </button>
+    <p id="history-status" class="text-sm text-gray-600 mt-2"></p>
+  </div>
+
+  <div id="history-results" class="mt-4 space-y-2"></div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const button = document.getElementById('history-location');
+    const status = document.getElementById('history-status');
+    const results = document.getElementById('history-results');
+
+    button.addEventListener('click', function() {
+      if (navigator.geolocation) {
+        status.textContent = '位置情報を取得しています...';
+        navigator.geolocation.getCurrentPosition(async function(position) {
+          const lat = position.coords.latitude.toFixed(6);
+          const lon = position.coords.longitude.toFixed(6);
+
+          status.textContent = '周辺の歴史データを検索中...';
+
+          // このURLを実際のAPIエンドポイントに置き換えてください
+          const API_KEY = 'YOUR_API_KEY';
+          const url = `https://history.example/api?lat=${lat}&lon=${lon}&apiKey=${API_KEY}`;
+
+          try {
+            const response = await fetch(url);
+            const data = await response.json();
+
+            results.innerHTML = '';
+            if (data.items && data.items.length > 0) {
+              data.items.forEach(item => {
+                const div = document.createElement('div');
+                div.innerHTML = `<a href="${item.url}" target="_blank" class="text-blue-700 underline">${item.title}</a>`;
+                results.appendChild(div);
+              });
+              status.textContent = '周辺の歴史データを表示しました';
+            } else {
+              status.textContent = '近くの歴史情報が見つかりませんでした';
+            }
+          } catch (error) {
+            console.error('fetch error:', error);
+            status.textContent = '歴史データの取得に失敗しました';
+          }
+        }, function(error) {
+          let message;
+          switch(error.code) {
+            case error.PERMISSION_DENIED:
+              message = '位置情報の使用が許可されませんでした';
+              break;
+            case error.POSITION_UNAVAILABLE:
+              message = '現在地を特定できませんでした';
+              break;
+            case error.TIMEOUT:
+              message = '位置情報の取得に時間がかかりすぎました';
+              break;
+            default:
+              message = '不明なエラーが発生しました';
+          }
+          status.textContent = message;
+        });
+      } else {
+        status.textContent = 'お使いのブラウザでは位置情報を取得できません';
+      }
+    });
+  });
+</script>
