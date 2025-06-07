@@ -1,0 +1,80 @@
+<div class="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-lg mt-10">
+  <h1 class="text-3xl font-bold text-center mb-8">周辺情報検索</h1>
+
+  <div class="flex justify-center space-x-4 mb-6">
+    <button data-category="history" class="search-btn px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">歴史</button>
+    <button data-category="food" class="search-btn px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition">食事</button>
+  </div>
+  <p id="history-status" class="text-sm text-gray-600 text-center mb-4"></p>
+  <div id="history-results" class="mt-4 space-y-2"></div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('.search-btn');
+    const status = document.getElementById('history-status');
+    const results = document.getElementById('history-results');
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => search(btn.dataset.category));
+    });
+
+    function search(category) {
+      if (!navigator.geolocation) {
+        status.textContent = 'お使いのブラウザでは位置情報を取得できません';
+        return;
+      }
+
+      status.textContent = '位置情報を取得しています...';
+      navigator.geolocation.getCurrentPosition(async position => {
+        const lat = position.coords.latitude.toFixed(6);
+        const lon = position.coords.longitude.toFixed(6);
+
+        status.textContent = '情報を検索中...';
+        try {
+          const response = await fetch('/search', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-Token': csrfToken
+            },
+            body: JSON.stringify({ lat, lon, category })
+          });
+          const data = await response.json();
+
+          results.innerHTML = '';
+          if (data.items && data.items.length > 0) {
+            data.items.forEach(item => {
+              const div = document.createElement('div');
+              div.innerHTML = `<a href="${item.url}" target="_blank" class="text-blue-700 underline">${item.title}</a>`;
+              results.appendChild(div);
+            });
+            status.textContent = '検索結果を表示しました';
+          } else {
+            status.textContent = '近くの情報が見つかりませんでした';
+          }
+        } catch (e) {
+          console.error('fetch error:', e);
+          status.textContent = '情報の取得に失敗しました';
+        }
+      }, error => {
+        let message;
+        switch(error.code) {
+          case error.PERMISSION_DENIED:
+            message = '位置情報の使用が許可されませんでした';
+            break;
+          case error.POSITION_UNAVAILABLE:
+            message = '現在地を特定できませんでした';
+            break;
+          case error.TIMEOUT:
+            message = '位置情報の取得に時間がかかりすぎました';
+            break;
+          default:
+            message = '不明なエラーが発生しました';
+        }
+        status.textContent = message;
+      });
+    }
+  });
+</script>
