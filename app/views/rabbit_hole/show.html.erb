@@ -37,15 +37,14 @@
       
       <!-- 年月日柱 -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- 年柱 -->
+        
+        <!-- 日柱 -->
         <div class="bg-white/5 rounded-lg p-4">
-          <h3 class="text-lg font-bold text-yellow-300 mb-3">年柱</h3>
+          <h3 class="text-lg font-bold text-blue-300 mb-3">日柱</h3>
           <div class="space-y-2 text-white text-sm">
-            <p><span class="text-purple-200">干支:</span> <%= @master.kanshi_year_k_info_1 %></p>
-            <p><span class="text-purple-200">蔵干:</span> <%= @master.zokan_year %></p>
-            <p><span class="text-purple-200">通変星:</span> <%= @master.tsuhen_year %></p>
-            <p><span class="text-purple-200">十二運:</span> <%= @master.unsei12_year %></p>
-            <p><span class="text-purple-200">エネルギー:</span> <%= @master.energy_year %></p>
+            <p><span class="text-purple-200">通変星:</span> <%= tsuhen_icon_tag(@master.tsuhen_day) || content_tag(:span, @master.tsuhen_day) %></p>
+            <p><span class="text-purple-200">蔵干通変星:</span> <%= tsuhen_icon_tag(@master.ztsuhen_day) || content_tag(:span, @master.ztsuhen_day) %></p>
+            <p><span class="text-purple-200">十二運:</span> <%= unsei_icon_tag(@master.unsei12_day) || content_tag(:span, @master.unsei12_day) %></p>
           </div>
         </div>
         
@@ -53,25 +52,22 @@
         <div class="bg-white/5 rounded-lg p-4">
           <h3 class="text-lg font-bold text-green-300 mb-3">月柱</h3>
           <div class="space-y-2 text-white text-sm">
-            <p><span class="text-purple-200">干支:</span> <%= @master.kanshi_month_k_info_1 %></p>
-            <p><span class="text-purple-200">蔵干:</span> <%= @master.zokan_month %></p>
-            <p><span class="text-purple-200">通変星:</span> <%= @master.tsuhen_month %></p>
-            <p><span class="text-purple-200">十二運:</span> <%= @master.unsei12_month %></p>
-            <p><span class="text-purple-200">エネルギー:</span> <%= @master.energy_month %></p>
+            <p><span class="text-purple-200">通変星:</span> <%= tsuhen_icon_tag(@master.tsuhen_month) || content_tag(:span, @master.tsuhen_month) %></p>
+            <p><span class="text-purple-200">蔵干通変星:</span> <%= tsuhen_icon_tag(@master.ztsuhen_month) || content_tag(:span, @master.ztsuhen_month) %></p>
+            <p><span class="text-purple-200">十二運:</span> <%= unsei_icon_tag(@master.unsei12_month) || content_tag(:span, @master.unsei12_month) %></p>
+          </div>
+        </div>
+
+        <!-- 年柱 -->
+        <div class="bg-white/5 rounded-lg p-4">
+          <h3 class="text-lg font-bold text-yellow-300 mb-3">年柱</h3>
+          <div class="space-y-2 text-white text-sm">
+            <p><span class="text-purple-200">通変星:</span> <%= tsuhen_icon_tag(@master.tsuhen_year) || content_tag(:span, @master.tsuhen_year) %></p>
+            <p><span class="text-purple-200">蔵干通変星:</span> <%= tsuhen_icon_tag(@master.ztsuhen_year) || content_tag(:span, @master.ztsuhen_year) %></p>
+            <p><span class="text-purple-200">十二運:</span> <%= unsei_icon_tag(@master.unsei12_year) || content_tag(:span, @master.unsei12_year) %></p>
           </div>
         </div>
         
-        <!-- 日柱 -->
-        <div class="bg-white/5 rounded-lg p-4">
-          <h3 class="text-lg font-bold text-blue-300 mb-3">日柱</h3>
-          <div class="space-y-2 text-white text-sm">
-            <p><span class="text-purple-200">干支:</span> <%= @master.kanshi_day_k_info_1 %></p>
-            <p><span class="text-purple-200">蔵干:</span> <%= @master.zokan_day %></p>
-            <p><span class="text-purple-200">通変星:</span> <%= @master.tsuhen_day %></p>
-            <p><span class="text-purple-200">十二運:</span> <%= @master.unsei12_day %></p>
-            <p><span class="text-purple-200">エネルギー:</span> <%= @master.energy_day %></p>
-          </div>
-        </div>
       </div>
     </div>
 
