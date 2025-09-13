@@ -1,0 +1,10 @@
+<div class="max-w-xl mx-auto p-6">
+  <h1 class="text-2xl font-bold mb-4">診断を作成しました</h1>
+  <p class="mb-2">これから<strong>5分間</strong>の間に以下のURLへアクセスすると結果を確認できます。</p>
+  <div class="p-3 bg-gray-100 rounded mb-4">
+    <code><%= rabbit_hole_url(token: @token) %></code>
+  </div>
+  <p class="mb-2">また、次の<strong>4桁パスワード</strong>でもアクセスできます（<%= @expires_at.strftime('%H:%M') %>まで有効）:</p>
+  <div class="text-3xl font-mono tracking-widest mb-6"><%= @code %></div>
+  <p class="text-sm text-gray-600">パスワードでアクセスする場合は <code><%= rabbit_hole_url %>?code=XXXX</code> にアクセスしてください。</p>
+</div>

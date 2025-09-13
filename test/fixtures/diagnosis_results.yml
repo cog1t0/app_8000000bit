@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  token: MyString
+  meishiki_master: one
+  type: 
+  memo: MyText
+  ai_summary: MyText
+  ai_advice: MyText
+  accessed: false
+
+two:
+  token: MyString
+  meishiki_master: two
+  type: 
+  memo: MyText
+  ai_summary: MyText
+  ai_advice: MyText
+  accessed: false

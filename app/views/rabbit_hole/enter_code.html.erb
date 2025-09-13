@@ -1,0 +1,16 @@
+<div class="max-w-md mx-auto p-6">
+  <h1 class="text-xl font-bold mb-4">コードで閲覧</h1>
+  <% if @hint_expires_at.present? %>
+    <p class="mb-2 text-sm text-gray-600">コード有効期限: <%= @hint_expires_at.strftime('%Y-%m-%d %H:%M') %></p>
+  <% end %>
+  <% if defined?(@code_error) && @code_error.present? %>
+    <div class="mb-3 p-3 bg-red-100 text-red-800 rounded"><%= @code_error %></div>
+  <% end %>
+  <form method="get" action="<%= rabbit_hole_path %>" class="space-y-3">
+    <label class="block">
+      <span class="text-sm">4桁コード</span>
+      <input name="code" maxlength="4" pattern="[0-9]{4}" inputmode="numeric" autocomplete="one-time-code" required class="border rounded px-3 py-2 w-full" />
+    </label>
+    <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded">表示する</button>
+  </form>
+</div>

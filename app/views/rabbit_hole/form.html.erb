@@ -1,0 +1,60 @@
+<div class="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 p-6">
+  <div class="max-w-2xl mx-auto">
+    <!-- ヘッダー -->
+    <div class="text-center mb-8">
+      <h1 class="text-4xl font-bold text-white mb-2">🐇 RabbitHole 診断入力</h1>
+      <p class="text-purple-200">占い師用 - テスト入力フォーム</p>
+    </div>
+
+    <!-- フォーム -->
+    <div class="bg-white/10 backdrop-blur-md rounded-xl p-6">
+      <%= form_with url: rabbit_hole_create_path("taro"), method: :post, local: true, class: "space-y-6" do |form| %>
+        
+        <!-- 生年月日 -->
+        <div class="grid grid-cols-3 gap-4">
+          <div>
+            <%= form.label :year, "生年", class: "block text-white font-bold mb-2" %>
+            <%= form.number_field :year, value: 1990, class: "w-full px-3 py-2 rounded-lg bg-white/20 text-white placeholder-white/50 border border-white/30 focus:border-purple-400 focus:outline-none" %>
+          </div>
+          <div>
+            <%= form.label :month, "月", class: "block text-white font-bold mb-2" %>
+            <%= form.number_field :month, value: 5, min: 1, max: 12, class: "w-full px-3 py-2 rounded-lg bg-white/20 text-white placeholder-white/50 border border-white/30 focus:border-purple-400 focus:outline-none" %>
+          </div>
+          <div>
+            <%= form.label :day, "日", class: "block text-white font-bold mb-2" %>
+            <%= form.number_field :day, value: 15, min: 1, max: 31, class: "w-full px-3 py-2 rounded-lg bg-white/20 text-white placeholder-white/50 border border-white/30 focus:border-purple-400 focus:outline-none" %>
+          </div>
+        </div>
+
+        <!-- 性別 -->
+        <div>
+          <%= form.label :sex, "性別", class: "block text-white font-bold mb-2" %>
+          <%= form.select :sex, [["男性", "男"], ["女性", "女"]], {}, {class: "w-full px-3 py-2 rounded-lg bg-white/20 text-white border border-white/30 focus:border-purple-400 focus:outline-none"} %>
+        </div>
+
+        <!-- 診断タイプ -->
+        <div>
+          <%= form.label :type, "診断タイプ", class: "block text-white font-bold mb-2" %>
+          <%= form.select :type, [["恋愛運", "恋愛運"], ["仕事運", "仕事運"], ["金運", "金運"], ["総合運", "総合運"]], {}, {class: "w-full px-3 py-2 rounded-lg bg-white/20 text-white border border-white/30 focus:border-purple-400 focus:outline-none"} %>
+        </div>
+
+        <!-- メモ -->
+        <div>
+          <%= form.label :memo, "相談内容・状況", class: "block text-white font-bold mb-2" %>
+          <%= form.text_area :memo, rows: 4, placeholder: "現在の状況や相談したいことを入力してください...", class: "w-full px-3 py-2 rounded-lg bg-white/20 text-white placeholder-white/50 border border-white/30 focus:border-purple-400 focus:outline-none resize-none" %>
+        </div>
+
+        <!-- 送信ボタン -->
+        <div class="text-center">
+          <%= form.submit "🔮 診断実行", class: "bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-3 px-8 rounded-lg transform hover:scale-105 transition-all duration-200 shadow-lg" %>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- 注意事項 -->
+    <div class="mt-6 bg-yellow-500/20 backdrop-blur-md rounded-xl p-4 border border-yellow-500/30">
+      <h3 class="text-yellow-300 font-bold mb-2">⚠️ テスト用フォーム</h3>
+      <p class="text-yellow-100 text-sm">このフォームはBasic認証（taro/taro123）でテストできます。</p>
+    </div>
+  </div>
+</div> 
