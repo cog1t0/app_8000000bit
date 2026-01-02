@@ -7,6 +7,15 @@ Rails.application.routes.draw do
   get  "/rabbit-hole/created", to: "rabbit_hole#created", as: :rabbit_hole_created
   get  "/rabbit-hole-form", to: "rabbit_hole#form", as: :rabbit_hole_form
 
+  # よりみちびんご
+  scope :yorimichi, module: "features/yorimichi_bingo", as: :yorimichi_bingo do
+    get "/", to: "bingo_cards#start", as: :start
+    post "/", to: "bingo_cards#create", as: :create
+    get "/:token", to: "bingo_cards#show", as: :card
+    patch "/:token/toggle", to: "bingo_cards#toggle", as: :toggle
+    post "/:token/reset", to: "bingo_cards#reset", as: :reset
+  end
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

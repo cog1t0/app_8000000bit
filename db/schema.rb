@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_13_120000) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_13_121500) do
+  create_table "bingo_cards", force: :cascade do |t|
+    t.string "token", null: false
+    t.string "title", null: false
+    t.json "items", default: [], null: false
+    t.datetime "expires_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["token"], name: "index_bingo_cards_on_token", unique: true
+  end
+
   create_table "diagnosis_results", force: :cascade do |t|
     t.string "token"
     t.integer "meishiki_master_id", null: false

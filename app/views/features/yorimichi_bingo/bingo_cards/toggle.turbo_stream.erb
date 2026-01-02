@@ -1,0 +1,4 @@
+<% toggled_item = @bingo_card.items.find { |i| i["id"].to_i == params[:id].to_i } %>
+
+<%= turbo_stream.replace "cell_#{params[:id]}", partial: "features/yorimichi_bingo/bingo_cards/cell", locals: { item: toggled_item, bingo_card: @bingo_card } %>
+<%= turbo_stream.replace "bingo_status", partial: "features/yorimichi_bingo/bingo_cards/status", locals: { bingo_card: @bingo_card, checker: @checker } %>

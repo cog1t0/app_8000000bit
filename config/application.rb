@@ -10,7 +10,8 @@ module App8000000bit
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0
-
+    config.i18n.available_locales = %i[jp en]
+    config.i18n.default_locale = :jp
     # 本番環境用の認証情報ファイルを設定
     if Rails.env.production?
       config.credentials.content_path = 'config/credentials/production.yml.enc'

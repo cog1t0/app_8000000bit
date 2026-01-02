@@ -1,0 +1,19 @@
+<div class="rounded-3xl bg-white/90 p-4 shadow-2xl ring-1 ring-slate-200">
+  <div class="mb-4 flex items-center justify-between">
+    <div>
+      <p class="text-xs font-semibold uppercase tracking-[0.25em] text-slate-400">Board</p>
+      <h3 class="text-lg font-bold text-slate-900">5 x 5 よりみちマス</h3>
+    </div>
+    <% if bingo_card.expired? %>
+      <span class="rounded-full bg-red-100 px-3 py-1 text-xs font-semibold text-red-700">期限切れ・閲覧のみ</span>
+    <% else %>
+      <span class="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">タップで更新</span>
+    <% end %>
+  </div>
+
+  <div class="grid grid-cols-5 gap-2 md:gap-3">
+    <% bingo_card.items.each do |item| %>
+      <%= render "features/yorimichi_bingo/bingo_cards/cell", item: item, bingo_card: bingo_card %>
+    <% end %>
+  </div>
+</div>
