@@ -1,24 +1,13 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+このプロジェクトは個人開発をパパッと世に出して試す用の実験的リポジトリです。
 
-Things you may want to cover:
+# kamal
+## deploy
+kama deploy
 
-* Ruby version
+## サーバーのコンテナに入る
+bundle exec kamal app exec --reuse --interactive "bash"
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## ログを確認
+bundle exec kamal app logs
