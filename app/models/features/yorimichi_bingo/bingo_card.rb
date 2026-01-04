@@ -16,6 +16,14 @@ module Features
         expires_at.present? && expires_at <= Time.current
       end
 
+      def setup_completed?
+        setup_completed_at.present?
+      end
+
+      def selected_category_slugs
+        super || []
+      end
+
       private
 
       def ensure_token

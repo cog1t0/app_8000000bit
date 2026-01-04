@@ -1,0 +1,81 @@
+<% content_for :title, "カテゴリを選ぶ | よりみちびんご" %>
+
+<div class="w-full space-y-8">
+  <div class="rounded-3xl bg-gradient-to-br from-emerald-500 via-lime-500 to-cyan-500 px-6 py-8 text-white shadow-2xl">
+    <p class="text-sm font-semibold uppercase tracking-[0.25em] text-white/70">Setup</p>
+    <h1 class="mt-2 text-3xl font-extrabold md:text-4xl">カテゴリをえらんでビンゴカードを完成させよう。</h1>
+    <p class="mt-4 max-w-3xl text-white/90">3〜8個のカテゴリをチェックすると、25マスが自動で埋まります。保存したあとは編集できませんが、新しいカードを作れば何度でもやり直せます。</p>
+  </div>
+
+  <turbo-frame id="flash">
+    <%= render "features/yorimichi_bingo/bingo_cards/flash" %>
+  </turbo-frame>
+
+  <%= form_with url: yorimichi_bingo_update_path(token: @bingo_card.token), method: :patch, scope: :setup, class: "space-y-8" do |f| %>
+    <div class="grid gap-6 md:grid-cols-2">
+      <div class="rounded-2xl bg-white p-6 shadow-xl ring-1 ring-slate-200">
+        <h2 class="text-lg font-semibold text-slate-900">カード情報</h2>
+        <p class="mt-1 text-sm text-slate-500">タイトルと遊べる日数を決めてください。</p>
+        <div class="mt-4 space-y-4">
+          <div>
+            <%= f.label :title, "カードのタイトル", class: "block text-sm font-medium text-slate-700" %>
+            <%= f.text_field :title,
+                  value: @bingo_card.title,
+                  placeholder: "いつもとちがう30日",
+                  class: "mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-slate-900 shadow-sm focus:border-emerald-400 focus:outline-none focus:ring focus:ring-emerald-200" %>
+          </div>
+          <div>
+            <%= f.label :duration_days, "あそべる期間（日数）", class: "block text-sm font-medium text-slate-700" %>
+            <%= f.number_field :duration_days,
+                  value: @duration_days,
+                  min: 1,
+                  max: 120,
+                  class: "mt-1 w-32 rounded-xl border border-slate-200 px-3 py-2 text-slate-900 shadow-sm focus:border-emerald-400 focus:outline-none focus:ring focus:ring-emerald-200" %>
+            <p class="mt-1 text-xs text-slate-500">デフォルトは30日。120日まで指定できます。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-2xl bg-white p-6 shadow-xl ring-1 ring-slate-200">
+        <h2 class="text-lg font-semibold text-slate-900">カテゴリの選び方</h2>
+        <p class="mt-1 text-sm text-slate-500">3〜8個選択してください。複数選ぶと、それぞれのカテゴリからバランスよくマスがピックアップされます。</p>
+        <ul class="mt-4 list-disc space-y-1 pl-5 text-sm text-slate-500">
+          <li>カテゴリはあとから変更できません。</li>
+          <li>作成後にリセットすると新しいカードで再設定できます。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rounded-3xl bg-white p-6 shadow-2xl ring-1 ring-slate-200">
+      <h2 class="text-lg font-semibold text-slate-900">カテゴリをえらぶ</h2>
+      <p class="mt-1 text-sm text-slate-500">気になるカテゴリを3〜8個チェックしてください。</p>
+      <div class="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <% @categories.each do |category| %>
+          <% slug = category.slug %>
+          <% checked = @selected_category_slugs.include?(slug) %>
+          <label class="flex cursor-pointer flex-col justify-between rounded-2xl border px-4 py-4 shadow-sm transition hover:border-emerald-300 <%= checked ? "border-emerald-400 bg-emerald-50" : "border-slate-200 bg-white" %>">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="text-base font-semibold text-slate-900"><%= category.display_name %></span>
+                <span class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400"><%= category.slug %></span>
+              </div>
+              <% if category.description.present? %>
+                <p class="mt-2 text-sm text-slate-600"><%= category.description %></p>
+              <% end %>
+            </div>
+            <div class="mt-4 flex items-center justify-between text-xs text-slate-500">
+              <span><%= category.bingo_items.size %> 件のアイテム</span>
+              <%= check_box_tag "setup[category_slugs][]", slug, checked,
+                    class: "h-5 w-5 rounded border-slate-300 text-emerald-500 focus:ring-emerald-400" %>
+            </div>
+          </label>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+      <p class="text-sm text-slate-600">カテゴリを3〜8個選んでから「ビンゴをはじめる」を押してください。</p>
+      <%= f.submit "ビンゴをはじめる", class: "w-full rounded-2xl bg-gradient-to-r from-emerald-400 via-lime-400 to-cyan-500 px-6 py-4 text-center text-base font-semibold text-white shadow-xl transition hover:scale-[1.01] md:w-auto" %>
+    </div>
+  <% end %>
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_13_121500) do
+ActiveRecord::Schema[8.0].define(version: 2026_01_04_090100) do
   create_table "bingo_cards", force: :cascade do |t|
     t.string "token", null: false
     t.string "title", null: false
@@ -18,7 +18,29 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_13_121500) do
     t.datetime "expires_at", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.json "selected_category_slugs", default: [], null: false
+    t.datetime "setup_completed_at"
     t.index ["token"], name: "index_bingo_cards_on_token", unique: true
+  end
+
+  create_table "bingo_categories", force: :cascade do |t|
+    t.string "slug", null: false
+    t.string "display_name", null: false
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_bingo_categories_on_slug", unique: true
+  end
+
+  create_table "bingo_items", force: :cascade do |t|
+    t.integer "bingo_category_id", null: false
+    t.string "title", null: false
+    t.text "description"
+    t.string "illustration"
+    t.boolean "active", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bingo_category_id"], name: "index_bingo_items_on_bingo_category_id"
   end
 
   create_table "diagnosis_results", force: :cascade do |t|
@@ -77,5 +99,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_13_121500) do
     t.index ["year", "month", "day", "sex"], name: "index_meishiki_masters_on_year_and_month_and_day_and_sex", unique: true
   end
 
+  add_foreign_key "bingo_items", "bingo_categories"
   add_foreign_key "diagnosis_results", "meishiki_masters"
 end

@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   scope :yorimichi, module: "features/yorimichi_bingo", as: :yorimichi_bingo do
     get "/", to: "bingo_cards#start", as: :start
     post "/", to: "bingo_cards#create", as: :create
+    get "/:token/edit", to: "bingo_cards#edit", as: :edit
+    patch "/:token", to: "bingo_cards#update", as: :update
     get "/:token", to: "bingo_cards#show", as: :card
     patch "/:token/toggle", to: "bingo_cards#toggle", as: :toggle
     post "/:token/reset", to: "bingo_cards#reset", as: :reset

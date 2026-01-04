@@ -111,9 +111,9 @@
 
 ### M0: DB・モデル基盤
 **作業**
-- [ ] `bingo_cards` migration 作成＆migrate
-- [ ] `BingoCard` model 作成（token生成、validations、expired?）
-- [ ] token unique制約で衝突回避（衝突時は再生成）
+- [x] `bingo_cards` migration 作成＆migrate
+- [x] `BingoCard` model 作成（token生成、validations、expired?）
+- [x] token unique制約で衝突回避（衝突時は再生成）
 
 **完了条件**
 - Rails consoleで `BingoCard.create!` が成功し、tokenが8文字で付与される
@@ -122,9 +122,9 @@
 
 ### M1: 入口（作成画面）
 **作業**
-- [ ] routes: `GET/POST /yorimichi`
-- [ ] `start` アクションとフォーム表示（title, duration_days）
-- [ ] `create` でカード生成→ `redirect_to /yorimichi/:token`
+- [x] routes: `GET/POST /yorimichi`
+- [x] `start` アクションとフォーム表示（title, duration_days）
+- [x] `create` でカード生成→ `redirect_to /yorimichi/:token`
 
 **完了条件**
 - ブラウザで `/yorimichi` →「はじめる」でカード作成できる
@@ -133,9 +133,9 @@
 
 ### M2: カード表示（静的）
 **作業**
-- [ ] routes: `GET /yorimichi/:token`
-- [ ] `show` でカードを取得して 5x5 を表示
-- [ ] status（期限残日数、達成数、ビンゴ数）表示
+- [x] routes: `GET /yorimichi/:token`
+- [x] `show` でカードを取得して 5x5 を表示
+- [x] status（期限残日数、達成数、ビンゴ数）表示
 
 **完了条件**
 - token URLを直打ちして、同じカードが表示される
@@ -144,9 +144,9 @@
 
 ### M3: トグル（Hotwire）
 **作業**
-- [ ] routes: `PATCH /yorimichi/:token/toggle`
-- [ ] `toggle` アクション（serviceでトグル）
-- [ ] Turbo Streamで `cell_#{id}` と `bingo_status` を差し替え
+- [x] routes: `PATCH /yorimichi/:token/toggle`
+- [x] `toggle` アクション（serviceでトグル）
+- [x] Turbo Streamで `cell_#{id}` と `bingo_status` を差し替え
 
 **完了条件**
 - クリック即時反映（リロード不要）
@@ -156,9 +156,9 @@
 
 ### M4: 期限ロック
 **作業**
-- [ ] `expired?` true の場合、UIでボタン非表示/無効化
-- [ ] `toggle` でも更新拒否（flashメッセージ等）
-- [ ] `expires_at` 表示（残日数）
+- [x] `expired?` true の場合、UIでボタン非表示/無効化
+- [x] `toggle` でも更新拒否（flashメッセージ等）
+- [x] `expires_at` 表示（残日数）
 
 **完了条件**
 - expires_atを過去にして、更新できないことを確認
@@ -167,10 +167,10 @@
 
 ### M5: 新カード発行（reset）
 **作業**
-- [ ] routes: `POST /yorimichi/:token/reset`
-- [ ] 旧カードのtitleを引き継いで新カード生成（新token）
-- [ ] confirm ダイアログ
-- [ ] 旧カードは残す
+- [x] routes: `POST /yorimichi/:token/reset`
+- [x] 旧カードのtitleを引き継いで新カード生成（新token）
+- [x] confirm ダイアログ
+- [x] 旧カードは残す
 
 **完了条件**
 - 「あたらしいびんごを作る」で新URLに移動し、盤面が初期化されている
@@ -179,9 +179,9 @@
 
 ### M6: 最低限の体験調整（仕上げ）
 **作業**
-- [ ] 共有URLの表示（コピーしやすく）
-- [ ] 見た目（余白/枠/押しやすさ）を最低限整える
-- [ ] 文言（子ども向け）調整
+- [x] 共有URLの表示（コピーしやすく）
+- [x] 見た目（余白/枠/押しやすさ）を最低限整える
+- [x] 文言（子ども向け）調整
 
 **完了条件**
 - 家族/友人に見せて「分かる・押せる・楽しい」と言われる状態
@@ -218,10 +218,74 @@
 ## 11. 追加アイデア（MVP後）
 - カテゴリ（まち/こうえん/しぜん）でitemsを切り替え
 - 達成演出（ビンゴ達成でメッセージ、紙吹雪）
-- 共有の「閲覧のみ」リンク（readonly token）
 - 一覧画面（カード履歴）
 - Rack::Attackで総当たり対策
 
 ---
+
+## 12. ポストMVPロードマップ（案）
+MVP後に段階的に足すなら、以下のPシリーズを上から順に進めると安全。
+
+### P1: カテゴリ選択 + DBテンプレ同期
+**目的**: start画面は「スタート」ボタンだけに留め、遷移先の初回 edit 画面でカテゴリを3〜8個選ぶと25マスが自動で埋まる体験を作る。
+**作業例**
+- schema拡張: `bingo_categories`（display_name, slug）と `bingo_items`（category_id, title, description, illustration）を追加し、カテゴリ別の候補マスをDB管理（descriptionはedit画面や「使用例」ページでtipsとして表示）。
+- seedsまたは`db/templates/*.yml`からカテゴリ／アイテムをまとめてインポートする rake task を用意（後日「使用例」ページで再利用できるようにする）。
+- `start`画面はシンプルな説明 + スタートボタンのみとし、ボタン押下後の `edit`（初回のみアクセス可能）でカテゴリ選択UI（3〜8個のチェックボックス）を表示。
+- `BoardBuilder` を拡張し、選択されたカテゴリに属するアイテムをランダム or 均等に25マスへ割り当てる。例：「しぜん」「おみせ」「まち」を選択すると、それぞれのカテゴリから交互にマスが埋まる。
+- カテゴリを選び直すとプレビューをリフレッシュし、その場で盤面が入れ替わる。保存後は従来どおり `show` で共有。
+**完了条件**
+- `/yorimichi` → スタート → 初回 edit でカテゴリを3〜8個選ぶだけで25マスが生成される。
+- Rake task でカテゴリ/アイテムを再投入しても既存カードは影響を受けない。
+
+### P2: タイトル + 説明 + モーダル情報
+**目的**: ビンゴの趣旨やルールを共有しやすくする。
+**作業例**
+- `bingo_cards` に `description`（text）と `how_to_play`（jsonb or text, 任意）を追加。
+- 作成フォームに説明入力欄を追加し、`show` ではタイトル横に「i」ボタンを置いて Stimulus でモーダルを表示。モーダルには説明文 + カテゴリ情報を載せる。
+- トグルできない状態（期限切れ・閲覧専用）もモーダル内に表示して混乱を避ける。
+**完了条件**
+- タイトル下の説明リンクでモーダルが開き、概要/カテゴリ/遊び方を参照できる。
+- description が空の場合は UI が余計な隙間を作らない。
+
+### P3: セルUI（ボタン化 + イラスト）
+**目的**: 子どもでも直感的に押せるように、セル全体をボタン化し、簡単なアイコン/イラストを添える。
+**作業例**
+- `_cell.html.erb` を `<button>` ベースに書き換え、アクセシビリティ属性（`aria-pressed` 等）を付与。
+- items の各要素に `illustration`（例: `emoji`, `asset_name`, `color`）を持たせ、`BoardBuilder` とテンプレ data がそれを供給。
+- asset pipeline or CDN（app/assets/images/features/yorimichi/）にシンプルなSVGを配置し、遅延読み込みで描画。
+- 押下アニメーション（scale, shadow）をCSSで追加。
+**完了条件**
+- すべてのセルがキーボードでも押せる `<button>` になり、イラスト付きで表示される。
+- 既存カード（イラストなし）も壊れず、フォールバックテキストで表示。
+
+### P4: 達成演出 + ビンゴ計測API化
+**目的**: ビンゴ成立時の盛り上げと、将来的な分析API互換を意識。
+**作業例**
+- `BingoChecker` の結果に「新しく成立したライン数」を返すよう変更し、Turbo Stream で Stimulus controller にイベントを投げる。
+- Stimulus側で confetti / fireworks アニメーション（Canvas または CSS）を再生し、ダイアログでメッセージを表示。
+- 連続ビンゴ時に過剰発火しないよう debounce を実装。
+**完了条件**
+- 新しいビンゴラインができた瞬間に演出が走り、既存ビンゴでは演出されない。
+- アニメーションは非対応ブラウザでも gracefully degrade する。
+
+### P5: カード履歴・一覧
+**目的**: 過去のカードを振り返れるようにする。
+**作業例**
+- `GET /yorimichi/history`（または同等）で、token を保持するユーザーが自分のブラウザから履歴を見られる仕組みを追加（sessionに最近作成したtokenを保存）。
+- 一覧にはタイトル/カテゴリ/期限/進捗サマリを表示し、クリックで `show` に遷移。
+- 将来的なユーザーアカウント導入に備え、controller/serviceを疎結合に作る。
+**完了条件**
+- MVP後に作った複数カードが履歴ページで確認できる。
+- セッションが無い場合はシンプルな空表示 + 説明。
+
+### P6: Rate Limiting（Rack::Attack）
+**目的**: token 総当たりや高頻度トグルを抑止。
+**作業例**
+- `/yorimichi/:token` の連続アクセス、`toggle` のPOST頻度、`POST /yorimichi` のカード作成をそれぞれ制限するルールを追加。
+- 429応答時には簡単なJSON/Turbo Stream文言を返し、UIでリトライ案内。
+**完了条件**
+- 意図的な連打で 429 が返ること、通常利用では引っかからないことを確認。
+
 
 以上
