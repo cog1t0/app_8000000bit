@@ -1,0 +1,85 @@
+<figure class="logo-story"
+        data-controller="logo-story"
+        data-logo-story-state="finished"
+        data-action="visibilitychange@document->logo-story#syncPlayback turbo:before-cache@document->logo-story#finish">
+  <svg class="logo-story__drawing" viewBox="-28 -110 738 348" role="img" aria-labelledby="logo-story-title logo-story-description">
+    <title id="logo-story-title">8000000bitの、小さなはじまり。</title>
+    <desc id="logo-story-description">静かな7つの黒い四角。左端が境界をじっと見上げ、ひらめきを得て押し始めます。懸命に応援する仲間、控えめな仲間、よそ見する仲間。境界を突き破ると全員が拍手し、ロゴになります。下に8000000bitと表示され、読み方のヤオヨロズビットに切り替わります。</desc>
+
+    <%# The block sizes and positions match the supplied logo artwork. %>
+    <% [40.925781, 112.363281, 183.203125, 254.039062, 324.875, 395.710938, 466.546875].each_with_index do |x, index| %>
+      <g transform="translate(<%= x %> 57)">
+        <g class="logo-story__character" data-logo-story-target="character">
+          <rect class="logo-story__block" width="56.257812" height="56.257812" data-logo-story-target="body" />
+          <% if index.zero? %>
+            <g transform="translate(0 -56.257812)">
+              <g class="logo-story__red" data-logo-story-target="red">
+                <rect width="56.257812" height="56.257812" />
+              </g>
+            </g>
+          <% end %>
+          <g class="logo-story__face" data-logo-story-target="face">
+            <g class="logo-story__eyes" data-logo-story-target="eyes">
+              <ellipse cx="18" cy="22" rx="6.2" ry="9" />
+              <ellipse cx="38" cy="22" rx="6.2" ry="9" />
+              <g class="logo-story__pupils" data-logo-story-target="pupils">
+                <ellipse cx="17" cy="21" rx="2.6" ry="4.6" />
+                <ellipse cx="37" cy="21" rx="2.6" ry="4.6" />
+              </g>
+            </g>
+            <% if index.zero? %>
+              <path class="logo-story__determination" d="M11 8 l13 5 M45 8 l-13 5" data-logo-story-target="determination" />
+            <% end %>
+            <path class="logo-story__mouth" d="M24 39 Q28 42 32 39" data-logo-story-target="mouth" />
+            <ellipse class="logo-story__open-mouth" cx="28" cy="40" rx="3.4" ry="4.2" data-logo-story-target="openMouth" />
+          </g>
+          <g class="logo-story__gestures" data-logo-story-target="gestures">
+            <g class="logo-story__arm logo-story__arm--left" data-logo-story-target="leftArm">
+              <path d="M3 33 Q-17 17 -12 -8" />
+              <path d="M-12 -8 l-3 -5 M-12 -8 l1 -6 M-12 -8 l4 -4" />
+            </g>
+            <g class="logo-story__arm logo-story__arm--right" data-logo-story-target="rightArm">
+              <path d="M53 33 Q73 17 68 -8" />
+              <path d="M68 -8 l-3 -5 M68 -8 l1 -6 M68 -8 l4 -4" />
+            </g>
+          </g>
+        </g>
+        <% if index.between?(1, 2) %>
+          <text class="logo-story__question" x="28" y="-22" text-anchor="middle" data-logo-story-target="question">?</text>
+          <g class="logo-story__surprise" data-logo-story-target="surprise">
+            <path d="M28 -34 v10 M28 -18 v1" />
+          </g>
+        <% end %>
+      </g>
+    <% end %>
+
+    <g class="logo-story__idea" data-logo-story-target="idea">
+      <path class="logo-story__idea-light" d="M63 -17 C54 -24 59 -36 69 -36 C79 -36 84 -24 75 -17 L73 -12 H65 Z" />
+      <path d="M65 -8 h8 M67 -4 h4 M69 -45 v-7 M52 -39 l-5 -5 M86 -39 l5 -5 M46 -25 h-7 M92 -25 h7" />
+    </g>
+    <path class="logo-story__boundary" d="M2.728 57 C26 57 32 57 41 57 C52 57 86 57 97 57 C106 57 110 57 125 57 L679.273 57" data-logo-story-target="boundary" />
+    <g class="logo-story__break" data-logo-story-target="burst">
+      <path d="M25 34 l-9 -8 M69 -16 v-12 M109 34 l9 -8" />
+    </g>
+
+    <g class="logo-story__wordmark" data-logo-story-target="wordmark">
+      <%= render "logo_wordmark" %>
+    </g>
+    <text class="logo-story__reading logo-story__numeric-name" x="341" y="177" text-anchor="middle" data-logo-story-target="numericName">8000000bit</text>
+    <text class="logo-story__reading" x="341" y="177" text-anchor="middle" data-logo-story-target="reading">ヤオヨロズビット</text>
+  </svg>
+
+  <div class="logo-story__controls" data-logo-story-target="controls" hidden>
+    <button type="button" class="logo-story__control" data-action="logo-story#toggle" data-logo-story-target="toggle" aria-label="アニメーションをもう一度再生">
+      <svg class="logo-story__control-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M4 10 a8 8 0 1 1 1 7 M4 4 v6 h6" data-logo-story-target="icon" />
+      </svg>
+    </button>
+    <button type="button" class="logo-story__control logo-story__skip" data-action="logo-story#skip" data-logo-story-target="skip" aria-label="ロゴを見る" hidden>
+      <svg class="logo-story__control-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M6 6 l9 6 -9 6 Z M18 5 v14" />
+      </svg>
+    </button>
+  </div>
+  <figcaption class="logo-story__status" data-logo-story-target="status" role="status" aria-live="polite"></figcaption>
+</figure>

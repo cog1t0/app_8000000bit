@@ -1,0 +1,1103 @@
+.yao-main {
+  width: 100%;
+  min-height: 100dvh;
+  margin: 0;
+  padding: 0;
+}
+
+.yao-site {
+  --yao-bg: #fcfbf8;
+  --yao-shadow: #eeeae2;
+  --yao-surface: #ffffff;
+  --yao-surface-soft: #f4f2ed;
+  --yao-ink: #24231f;
+  --yao-muted: #6c685f;
+  --yao-red: #bd4031;
+  --yao-light: #eee8da;
+  --yao-line: rgba(36, 35, 31, 0.16);
+  --yao-edge: clamp(1.25rem, 4vw, 4.75rem);
+  --yao-max: 92rem;
+  color-scheme: light;
+  position: relative;
+  min-height: 100dvh;
+  overflow: clip;
+  background: var(--yao-bg);
+  color: var(--yao-ink);
+  font-family: "Avenir Next", Avenir, "Helvetica Neue", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  font-feature-settings: "palt" 1;
+  line-height: 1.7;
+}
+
+.yao-site::before {
+  position: absolute;
+  z-index: 0;
+  inset: 78dvh 0 auto;
+  height: 150rem;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 5% 22%, rgba(219, 198, 145, 0.08), transparent 31rem),
+    radial-gradient(ellipse at 90% 74%, rgba(181, 153, 91, 0.07), transparent 36rem);
+  content: "";
+}
+
+.yao-site::after {
+  position: fixed;
+  z-index: 40;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.018;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
+  content: "";
+}
+
+.yao-site *,
+.yao-site *::before,
+.yao-site *::after {
+  box-sizing: border-box;
+}
+
+.yao-site a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.yao-site a:focus-visible,
+.yao-site summary:focus-visible {
+  outline: 2px solid var(--yao-red);
+  outline-offset: 5px;
+}
+
+.yao-site figure,
+.yao-site p,
+.yao-site h1,
+.yao-site h2,
+.yao-site h3,
+.yao-site dl,
+.yao-site dd {
+  margin: 0;
+}
+
+.yao-skip {
+  position: fixed;
+  z-index: 60;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding: 0.7rem 0.9rem;
+  background: var(--yao-ink);
+  color: var(--yao-bg) !important;
+  transform: translateY(-160%);
+  transition: transform 180ms ease;
+}
+
+.yao-skip:focus {
+  transform: translateY(0);
+}
+
+.yao-curtain {
+  position: fixed;
+  z-index: 50;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  pointer-events: none;
+}
+
+.yao-curtain span {
+  background: var(--yao-shadow);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .yao-curtain span:first-child {
+    animation: yao-curtain-left 1.05s 180ms cubic-bezier(0.76, 0, 0.24, 1) both;
+  }
+
+  .yao-curtain span:last-child {
+    animation: yao-curtain-right 1.05s 180ms cubic-bezier(0.76, 0, 0.24, 1) both;
+  }
+}
+
+.yao-header {
+  position: absolute;
+  z-index: 20;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: grid;
+  grid-template-columns: minmax(12rem, 1fr) auto;
+  align-items: center;
+  width: min(calc(100% - (var(--yao-edge) * 2)), var(--yao-max));
+  min-height: 4.75rem;
+  margin-inline: auto;
+  border-bottom: 1px solid var(--yao-line);
+}
+
+.yao-logo {
+  display: block;
+  width: clamp(10rem, 17vw, 14.5rem);
+  height: 2.6rem;
+  overflow: hidden;
+}
+
+.yao-logo svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  mix-blend-mode: multiply;
+}
+
+.yao-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.25rem, 2.5vw, 2.75rem);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.yao-nav a {
+  position: relative;
+  padding: 0.75rem 0;
+  color: var(--yao-muted);
+  transition: color 220ms ease;
+}
+
+.yao-nav a::after {
+  position: absolute;
+  right: 0;
+  bottom: 0.45rem;
+  left: 0;
+  height: 1px;
+  background: var(--yao-red);
+  content: "";
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.yao-nav a:hover {
+  color: var(--yao-ink);
+}
+
+.yao-nav a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.yao-menu {
+  display: none;
+}
+
+.yao-hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  min-height: 100dvh;
+  margin-inline: auto;
+  padding: 7rem max(var(--yao-edge), calc((100vw - var(--yao-max)) / 2 + var(--yao-edge))) clamp(3.75rem, 8vh, 6.5rem);
+}
+
+.yao-hero-copy {
+  position: relative;
+  z-index: 4;
+  max-width: 49rem;
+  text-shadow: none;
+}
+
+.yao-eyebrow {
+  color: var(--yao-muted);
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.yao-hero h1 {
+  margin-top: clamp(1.5rem, 3.5vh, 2.75rem);
+  font-size: clamp(3.5rem, 7vw, 7.5rem);
+  font-weight: 650;
+  letter-spacing: -0.085em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.yao-hero h1 em {
+  display: inline-block;
+  padding-bottom: 0.08em;
+  color: var(--yao-red);
+  font-family: "Iowan Old Style", "YuMincho", "Hiragino Mincho ProN", serif;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.yao-hero-copy > p:last-child {
+  max-width: 28rem;
+  margin-top: clamp(1.5rem, 4vh, 2.75rem);
+  color: var(--yao-muted);
+  font-size: clamp(0.88rem, 1.15vw, 1.05rem);
+  line-height: 1.9;
+}
+
+.yao-hero-visual {
+  position: absolute;
+  z-index: -1;
+  inset: -0.75rem;
+  overflow: hidden;
+  background: var(--yao-shadow);
+  transform: translate3d(calc(var(--pointer-x, 0) * 5px), calc(var(--pointer-y, 0) * 5px), 0);
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.yao-hero-visual::before {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(15, 14, 10, 0.96) 0%, rgba(18, 16, 11, 0.84) 27%, rgba(18, 16, 11, 0.23) 63%, rgba(18, 16, 11, 0.04) 100%),
+    linear-gradient(180deg, rgba(15, 14, 10, 0.58) 0%, transparent 23%, transparent 70%, rgba(15, 14, 10, 0.72) 100%);
+  content: "";
+  pointer-events: none;
+}
+
+.yao-hero-visual img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(0.78) contrast(1.02) brightness(0.94);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .yao-hero-copy > * {
+    opacity: 0;
+    animation: yao-rise 760ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .yao-hero-copy > *:nth-child(1) { animation-delay: 760ms; }
+  .yao-hero-copy > *:nth-child(2) { animation-delay: 860ms; }
+  .yao-hero-copy > *:nth-child(3) { animation-delay: 980ms; }
+
+  .yao-hero-visual {
+    animation: yao-image-reveal 1.2s 650ms cubic-bezier(0.76, 0, 0.24, 1) both;
+  }
+}
+
+.yao-origin {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(19rem, 0.8fr) minmax(25rem, 1.2fr);
+  gap: clamp(4rem, 9vw, 10rem);
+  align-items: center;
+  width: min(calc(100% - (var(--yao-edge) * 2)), var(--yao-max));
+  min-height: 60rem;
+  margin-inline: auto;
+  padding: clamp(8rem, 15vw, 14rem) 0;
+}
+
+.yao-origin::before {
+  position: absolute;
+  z-index: -1;
+  top: 16%;
+  left: -22%;
+  width: 62rem;
+  aspect-ratio: 1.2;
+  background: radial-gradient(ellipse, rgba(217, 201, 159, 0.11), rgba(123, 101, 56, 0.035) 42%, transparent 72%);
+  content: "";
+  transform: rotate(-12deg);
+}
+
+.yao-origin-figure {
+  position: relative;
+  aspect-ratio: 1;
+  max-width: 34rem;
+}
+
+.yao-seed {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  width: 2.2rem;
+  height: 2.2rem;
+  background: var(--yao-red);
+  box-shadow: 0 0.5rem 2rem rgba(99, 36, 25, 0.1);
+  transform: translate(-50%, -50%);
+}
+
+.yao-orbit {
+  position: absolute;
+  border: 1px solid rgba(36, 35, 31, 0.24);
+  border-radius: 50%;
+}
+
+.yao-orbit::before,
+.yao-orbit::after {
+  position: absolute;
+  width: 0.7rem;
+  height: 0.7rem;
+  background: var(--yao-ink);
+  content: "";
+}
+
+.yao-orbit::before {
+  top: 12%;
+  left: 11%;
+}
+
+.yao-orbit::after {
+  right: 12%;
+  bottom: 10%;
+}
+
+.yao-orbit--one { inset: 35%; }
+.yao-orbit--two { inset: 18%; transform: rotate(35deg); }
+.yao-orbit--three { inset: 0; transform: rotate(-24deg); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .yao-reveal.is-visible .yao-orbit--two {
+    animation: yao-orbit 18s linear infinite;
+  }
+
+  .yao-reveal.is-visible .yao-orbit--three {
+    animation: yao-orbit-reverse 28s linear infinite;
+  }
+}
+
+.yao-origin-copy {
+  max-width: 48rem;
+}
+
+.yao-origin-copy h2,
+.yao-respect-copy h2 {
+  font-family: "Iowan Old Style", "YuMincho", "Hiragino Mincho ProN", serif;
+  font-size: clamp(4.2rem, 9vw, 9.5rem);
+  font-weight: 500;
+  letter-spacing: -0.075em;
+  line-height: 0.95;
+}
+
+.yao-origin-copy p {
+  max-width: 39rem;
+  margin-top: 2rem;
+  color: var(--yao-muted);
+  font-size: clamp(0.9rem, 1.2vw, 1.08rem);
+  line-height: 2.05;
+  text-wrap: pretty;
+}
+
+.yao-origin-copy p:first-of-type {
+  margin-top: 3.5rem;
+  color: var(--yao-ink);
+  font-size: clamp(1.08rem, 1.55vw, 1.4rem);
+}
+
+.yao-capabilities {
+  width: min(calc(100% - (var(--yao-edge) * 2)), var(--yao-max));
+  margin-inline: auto;
+  padding: clamp(7rem, 12vw, 11rem) 0 clamp(9rem, 15vw, 15rem);
+  border-top: 1px solid var(--yao-line);
+}
+
+.yao-capabilities-intro {
+  max-width: 68rem;
+  margin-left: clamp(0rem, 9vw, 9rem);
+}
+
+.yao-capabilities-intro h2 {
+  font-size: clamp(3.2rem, 7.2vw, 7.6rem);
+  font-weight: 620;
+  letter-spacing: -0.078em;
+  line-height: 1.02;
+}
+
+.yao-capability-list {
+  display: grid;
+  gap: 0;
+  margin-top: clamp(6rem, 11vw, 10rem);
+}
+
+.yao-capability {
+  display: grid;
+  grid-template-columns: minmax(15rem, 0.8fr) minmax(18rem, 1fr) minmax(10rem, 0.45fr);
+  gap: clamp(1.5rem, 5vw, 6rem);
+  align-items: start;
+  padding: clamp(2rem, 4vw, 3.5rem) 0;
+  border-top: 1px solid var(--yao-line);
+}
+
+.yao-capability:nth-child(2) {
+  margin-right: clamp(0rem, 7vw, 7rem);
+  margin-left: clamp(0rem, 7vw, 7rem);
+}
+
+.yao-capability h3 {
+  font-size: clamp(1.45rem, 2.4vw, 2.5rem);
+  font-weight: 570;
+  letter-spacing: -0.04em;
+  line-height: 1.25;
+}
+
+.yao-capability p {
+  max-width: 34rem;
+  color: var(--yao-muted);
+  font-size: 0.92rem;
+  line-height: 1.95;
+}
+
+.yao-capability > span {
+  justify-self: end;
+  color: var(--yao-muted);
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+}
+
+.yao-work {
+  position: relative;
+  width: min(calc(100% - (var(--yao-edge) * 2)), var(--yao-max));
+  margin-inline: auto;
+  padding: clamp(7rem, 12vw, 11rem) 0 clamp(10rem, 16vw, 16rem);
+}
+
+.yao-work::before {
+  position: absolute;
+  z-index: -1;
+  right: -30vw;
+  bottom: 8%;
+  width: 78rem;
+  aspect-ratio: 1.4;
+  background: radial-gradient(ellipse, rgba(217, 201, 159, 0.075), transparent 68%);
+  content: "";
+}
+
+.yao-work-heading {
+  margin-bottom: clamp(3rem, 6vw, 5.5rem);
+}
+
+.yao-work-heading h2 {
+  margin-top: 0.9rem;
+  font-size: clamp(4rem, 10vw, 10rem);
+  font-weight: 620;
+  letter-spacing: -0.09em;
+  line-height: 0.88;
+}
+
+.yao-project-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(22rem, 0.65fr);
+  min-height: 45rem;
+  border: 1px solid var(--yao-line);
+  background: var(--yao-surface);
+  box-shadow: none;
+}
+
+.yao-project-card.yao-project-card--exploration {
+  grid-template-columns: 1fr;
+  min-height: 0;
+}
+
+.yao-project-card--exploration .yao-project-copy > p {
+  max-width: 44rem;
+}
+
+.yao-project-card figure {
+  position: relative;
+  min-height: 34rem;
+  overflow: hidden;
+}
+
+.yao-project-card figure::after {
+  position: absolute;
+  inset: 0;
+  background: none;
+  content: "";
+}
+
+.yao-project-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 800ms cubic-bezier(0.16, 1, 0.3, 1), filter 400ms ease;
+}
+
+.yao-project-card:hover img {
+  filter: contrast(1.04) saturate(1.08);
+  transform: scale(1.025);
+}
+
+.yao-project-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(2rem, 4.5vw, 5rem);
+}
+
+.yao-project-copy h3 {
+  font-family: "Iowan Old Style", "YuMincho", "Hiragino Mincho ProN", serif;
+  font-size: clamp(2.2rem, 4vw, 4.6rem);
+  font-weight: 500;
+  letter-spacing: -0.065em;
+  line-height: 1.18;
+}
+
+.yao-project-copy > p {
+  margin-top: 2.25rem;
+  color: var(--yao-muted);
+  font-size: 0.92rem;
+  line-height: 1.95;
+}
+
+.yao-project-copy dl {
+  display: grid;
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.yao-project-copy dl div {
+  display: grid;
+  grid-template-columns: 6rem 1fr;
+  gap: 1rem;
+  font-size: 0.72rem;
+}
+
+.yao-project-copy dt {
+  color: var(--yao-muted);
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+
+.yao-project-copy dd {
+  color: var(--yao-ink);
+}
+
+.yao-text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: max-content;
+  margin-top: 3rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid currentColor;
+  font-size: 0.78rem;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+}
+
+.yao-text-link i {
+  color: var(--yao-red);
+  font-style: normal;
+  transition: transform 240ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.yao-project-card:hover .yao-text-link i,
+.yao-text-link:hover i {
+  transform: translate(0.2rem, -0.2rem);
+}
+
+.yao-project-card:active {
+  transform: translateY(1px);
+}
+
+.yao-respect {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(22rem, 0.75fr);
+  align-items: center;
+  min-height: 58rem;
+  overflow: hidden;
+  border-top: 1px solid var(--yao-line);
+  border-bottom: 1px solid var(--yao-line);
+  background: var(--yao-surface-soft);
+}
+
+.yao-respect-pattern {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: clamp(0.6rem, 1.5vw, 1.5rem);
+  width: min(78vw, 62rem);
+  margin-left: calc(var(--yao-edge) * -1);
+  transform: rotate(-8deg);
+}
+
+.yao-respect-pattern i {
+  display: block;
+  aspect-ratio: 1;
+  border: 1px solid rgba(36, 35, 31, 0.2);
+  border-radius: 50%;
+  transition: border-radius 700ms cubic-bezier(0.16, 1, 0.3, 1), background 400ms ease, transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.yao-respect-pattern i:nth-child(5n),
+.yao-respect-pattern i:nth-child(7n) {
+  border-radius: 0;
+  background: rgba(36, 35, 31, 0.035);
+}
+
+.yao-respect.is-visible .yao-respect-pattern i:nth-child(11) {
+  border-color: var(--yao-red);
+  background: var(--yao-red);
+  transform: translateY(-25%);
+}
+
+.yao-respect-copy {
+  position: relative;
+  z-index: 2;
+  max-width: 39rem;
+  padding: clamp(4rem, 8vw, 9rem) var(--yao-edge) clamp(5rem, 9vw, 10rem) 0;
+}
+
+.yao-respect-copy h2 {
+  font-size: clamp(3.8rem, 7.6vw, 8.3rem);
+}
+
+.yao-respect-copy p {
+  margin-top: 2rem;
+  color: var(--yao-muted);
+  font-size: 0.9rem;
+  line-height: 2;
+}
+
+.yao-respect-copy p:first-of-type {
+  margin-top: 3.25rem;
+  color: var(--yao-ink);
+}
+
+.yao-about {
+  display: grid;
+  grid-template-columns: minmax(25rem, 0.95fr) minmax(25rem, 1.05fr);
+  gap: clamp(4rem, 10vw, 12rem);
+  width: min(calc(100% - (var(--yao-edge) * 2)), var(--yao-max));
+  min-height: 48rem;
+  margin-inline: auto;
+  padding: clamp(9rem, 15vw, 15rem) 0;
+}
+
+.yao-about-name {
+  position: relative;
+  align-self: start;
+  min-height: 28rem;
+}
+
+.yao-about-name > span {
+  position: absolute;
+  top: -0.25em;
+  left: -0.1em;
+  color: rgba(36, 35, 31, 0.055);
+  font-family: "Iowan Old Style", "Times New Roman", serif;
+  font-size: clamp(18rem, 34vw, 34rem);
+  line-height: 0.72;
+  pointer-events: none;
+}
+
+.yao-about-name h2 {
+  position: relative;
+  z-index: 1;
+  padding-top: clamp(8rem, 13vw, 13rem);
+  font-size: clamp(2.5rem, 5vw, 5.8rem);
+  font-weight: 590;
+  letter-spacing: -0.07em;
+  line-height: 1;
+}
+
+.yao-about-name small {
+  display: block;
+  margin-top: 1rem;
+  color: var(--yao-red);
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+
+.yao-about-copy {
+  align-self: center;
+  max-width: 42rem;
+}
+
+.yao-about-copy p {
+  margin-top: 1.75rem;
+  color: var(--yao-muted);
+  font-size: 0.94rem;
+  line-height: 2;
+  text-wrap: pretty;
+}
+
+.yao-about-copy .yao-about-lead {
+  margin-top: 0;
+  color: var(--yao-ink);
+  font-size: clamp(1.45rem, 2.6vw, 2.5rem);
+  font-weight: 520;
+  letter-spacing: -0.035em;
+  line-height: 1.55;
+}
+
+.yao-footer {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  width: min(calc(100% - (var(--yao-edge) * 2)), var(--yao-max));
+  min-height: 24rem;
+  margin-inline: auto;
+  padding: 5rem 0 3rem;
+  border-top: 1px solid var(--yao-line);
+}
+
+.yao-footer-logo {
+  display: grid;
+  grid-template-columns: repeat(7, clamp(1.1rem, 2.8vw, 2.8rem));
+  grid-template-rows: repeat(2, clamp(1.1rem, 2.8vw, 2.8rem));
+  gap: clamp(0.45rem, 1vw, 0.9rem);
+}
+
+.yao-footer-logo span {
+  grid-row: 2;
+  background: var(--yao-ink);
+}
+
+.yao-footer-logo span:first-child {
+  grid-row: 1;
+  background: var(--yao-red);
+}
+
+.yao-footer-logo span:nth-child(2) {
+  grid-column: 1;
+}
+
+.yao-footer-copy {
+  display: grid;
+  justify-items: end;
+  gap: 0.25rem;
+  text-align: right;
+}
+
+.yao-footer-copy strong {
+  font-size: 1rem;
+  letter-spacing: -0.03em;
+}
+
+.yao-footer-copy span {
+  color: var(--yao-muted);
+  font-size: 0.68rem;
+}
+
+.yao-footer-copy small {
+  margin-top: 2.5rem;
+  color: var(--yao-muted);
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 0.58rem;
+}
+
+.yao-reveal {
+  opacity: 0;
+  transform: translateY(2.25rem);
+  transition: opacity 900ms cubic-bezier(0.16, 1, 0.3, 1), transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.yao-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes yao-curtain-left {
+  to { transform: translateX(-101%); }
+}
+
+@keyframes yao-curtain-right {
+  to { transform: translateX(101%); }
+}
+
+@keyframes yao-rise {
+  from { opacity: 0; transform: translateY(1.5rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes yao-image-reveal {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes yao-orbit {
+  to { transform: rotate(395deg); }
+}
+
+@keyframes yao-orbit-reverse {
+  to { transform: rotate(-384deg); }
+}
+
+@media (max-width: 1020px) {
+  .yao-hero h1 {
+    font-size: clamp(3.3rem, 6.8vw, 5.4rem);
+  }
+
+  .yao-project-card {
+    grid-template-columns: minmax(0, 1.1fr) minmax(20rem, 0.9fr);
+  }
+
+  .yao-respect {
+    grid-template-columns: minmax(0, 1fr) minmax(21rem, 0.8fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .yao-header {
+    grid-template-columns: 1fr auto;
+    min-height: 4.25rem;
+  }
+
+  .yao-logo {
+    width: 10.5rem;
+    height: 2.3rem;
+  }
+
+  .yao-nav {
+    display: none;
+  }
+
+  .yao-menu {
+    position: relative;
+    display: block;
+  }
+
+  .yao-menu summary {
+    padding: 0.75rem 0;
+    cursor: pointer;
+    list-style: none;
+    font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+  }
+
+  .yao-menu summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .yao-menu[open] summary {
+    color: var(--yao-red);
+  }
+
+  .yao-menu nav {
+    position: absolute;
+    top: 3.25rem;
+    right: 0;
+    display: grid;
+    min-width: 12rem;
+    padding: 0.65rem;
+    border: 1px solid var(--yao-line);
+    background: var(--yao-surface);
+    box-shadow: 0 1rem 3rem rgba(36, 35, 31, 0.1);
+  }
+
+  .yao-menu nav a {
+    padding: 0.85rem 0.75rem;
+    font-size: 0.78rem;
+  }
+
+  .yao-hero {
+    min-height: 100dvh;
+    padding: 6.25rem var(--yao-edge) 4rem;
+  }
+
+  .yao-hero-copy {
+    width: 100%;
+    padding: 0;
+  }
+
+  .yao-hero h1 {
+    margin-top: 1.25rem;
+    font-size: clamp(3.15rem, 14vw, 5rem);
+  }
+
+  .yao-hero-copy > p:last-child {
+    max-width: 20rem;
+    margin-top: 1.4rem;
+    font-size: 0.82rem;
+  }
+
+  .yao-hero-visual {
+    inset: -0.5rem;
+  }
+
+  .yao-hero-visual::before {
+    background:
+      linear-gradient(0deg, rgba(15, 14, 10, 0.94) 0%, rgba(15, 14, 10, 0.58) 38%, rgba(15, 14, 10, 0.1) 68%),
+      linear-gradient(180deg, rgba(15, 14, 10, 0.56), transparent 24%);
+  }
+
+  .yao-hero-visual img {
+    object-position: 66% center;
+  }
+
+  .yao-origin {
+    grid-template-columns: 1fr;
+    gap: 4.5rem;
+    min-height: auto;
+    padding: 8rem 0 9rem;
+  }
+
+  .yao-origin-figure {
+    width: min(78vw, 26rem);
+    margin-inline: auto;
+  }
+
+  .yao-origin-copy h2,
+  .yao-respect-copy h2 {
+    font-size: clamp(4rem, 19vw, 6.2rem);
+  }
+
+  .yao-origin-copy p:first-of-type {
+    margin-top: 2.5rem;
+    font-size: 1.02rem;
+  }
+
+  .yao-capabilities {
+    padding: 7rem 0 9rem;
+  }
+
+  .yao-capabilities-intro {
+    margin-left: 0;
+  }
+
+  .yao-capabilities-intro h2 {
+    font-size: clamp(3rem, 13vw, 5.5rem);
+  }
+
+  .yao-capability-list {
+    margin-top: 5rem;
+  }
+
+  .yao-capability,
+  .yao-capability:nth-child(2) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-inline: 0;
+    padding: 2.25rem 0;
+  }
+
+  .yao-capability > span {
+    justify-self: start;
+    margin-top: 0.5rem;
+  }
+
+  .yao-work {
+    padding: 7rem 0 10rem;
+  }
+
+  .yao-work-heading h2 {
+    font-size: clamp(4rem, 20vw, 7rem);
+  }
+
+  .yao-project-card {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .yao-project-card figure {
+    min-height: 25rem;
+  }
+
+  .yao-project-copy {
+    padding: 2.25rem 1.5rem 3rem;
+  }
+
+  .yao-project-copy h3 {
+    font-size: clamp(2rem, 9vw, 3.25rem);
+  }
+
+  .yao-respect {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .yao-respect-pattern {
+    grid-template-columns: repeat(6, 1fr);
+    width: 120vw;
+    margin-top: 5rem;
+    margin-left: -18vw;
+  }
+
+  .yao-respect-copy {
+    padding: 6rem var(--yao-edge) 8rem;
+  }
+
+  .yao-about {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    min-height: 0;
+    padding: 8rem 0 10rem;
+  }
+
+  .yao-about-name {
+    min-height: 21rem;
+  }
+
+  .yao-about-name h2 {
+    padding-top: 9rem;
+    font-size: clamp(2.7rem, 12vw, 4.5rem);
+  }
+
+  .yao-about-name > span {
+    font-size: 22rem;
+  }
+
+  .yao-footer {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    min-height: 26rem;
+  }
+
+  .yao-footer-copy {
+    justify-items: start;
+    text-align: left;
+  }
+}
+
+@media (max-width: 420px) {
+  .yao-eyebrow {
+    font-size: 0.56rem;
+    letter-spacing: 0.08em;
+  }
+
+  .yao-hero h1 {
+    font-size: clamp(2.8rem, 13vw, 3.7rem);
+  }
+
+  .yao-project-card figure {
+    min-height: 20rem;
+  }
+
+  .yao-project-copy dl div {
+    grid-template-columns: 5.2rem 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .yao-curtain {
+    display: none;
+  }
+
+  .yao-reveal,
+  .yao-hero-copy > *,
+  .yao-hero-visual {
+    opacity: 1;
+    clip-path: none;
+    transform: none;
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .yao-orbit {
+    animation: none !important;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .yao-menu nav {
+    background: var(--yao-surface);
+  }
+}

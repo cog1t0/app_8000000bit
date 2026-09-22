@@ -1,170 +1,149 @@
-<div class="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-lg mt-10">
-  <h1 class="text-3xl font-bold text-center mb-8">
-    Hello from 8000000bit.app 👋
-  </h1>
-  
-  <div class="mb-6 p-4 bg-gray-50 rounded-md">
-    <h2 class="text-xl font-semibold mb-3">あなたの情報</h2>
-    <div id="first-visit" class="mb-2">初回アクセス日: <span class="font-medium">読み込み中...</span></div>
-    <div id="location-info" class="mb-2">位置情報: <span class="font-medium">読み込み中...</span></div>
-    <div id="address-info" class="mb-2">訪問場所: <span class="font-medium">未取得</span></div>
-  </div>
-  
-  <div id="location-container" class="text-center">
-    <div id="location-prompt" class="mb-4 hidden">
-      <p class="text-gray-700 mb-2">初回訪問の記念として、あなたが最初にこのサイトを訪れた場所を記録しませんか？</p>
-      <p class="text-sm text-gray-500 mb-3">この情報はあなたのデバイスにのみ保存され、一度だけ記録されます。</p>
-      <button id="get-location" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-1" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
-        </svg>
-        記念に現在地を記録する
-      </button>
-    </div>
-    <p id="location-status" class="text-sm text-gray-600"></p>
-  </div>
-</div>
+<% content_for :title, "8000000bit（ヤオヨロズビット）| 桑原陸也" %>
+<% content_for :description, "8000000bit（ヤオヨロズビット）は、桑原陸也が運営する個人開発スタジオです。小さなプロトタイプから、仕事や仕組み全体の変化をつくります。" %>
+<% content_for :main_class, "yao-main" %>
+<% content_for :full_bleed, true %>
+<% content_for :head do %>
+  <%= stylesheet_link_tag "corporate", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "logo_story", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "cloud_study", "data-turbo-track": "reload" %>
+  <meta property="og:title" content="8000000bit | 桑原陸也">
+  <meta property="og:description" content="小さくつくり、全体を変える。個人開発スタジオ、ヤオヨロズビット。">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="<%= asset_url("8000000bit/hero-shadow.webp") %>">
+  <meta name="theme-color" content="#fcfbf8">
+<% end %>
 
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // 初回アクセス日の管理
-    const firstVisitElement = document.getElementById('first-visit');
-    const firstVisitDate = localStorage.getItem('8000000bit_first_visit');
-    
-    if (!firstVisitDate) {
-      // 初回アクセスの場合は現在の日時を保存
-      const now = new Date();
-      const formattedDate = now.toLocaleString('ja-JP');
-      localStorage.setItem('8000000bit_first_visit', formattedDate);
-      firstVisitElement.querySelector('span').textContent = formattedDate + ' (今回が初めてのアクセスです)';
-    } else {
-      // 過去にアクセスしたことがある場合
-      firstVisitElement.querySelector('span').textContent = firstVisitDate;
-    }
-    
-    // 位置情報と住所の取得と表示
-    const locationElement = document.getElementById('location-info');
-    const addressElement = document.getElementById('address-info');
-    const locationButton = document.getElementById('get-location');
-    const locationStatus = document.getElementById('location-status');
-    const locationPrompt = document.getElementById('location-prompt');
-    
-    // 保存済みの位置情報があれば表示
-    const savedLocation = localStorage.getItem('8000000bit_location');
-    const savedAddress = localStorage.getItem('8000000bit_address');
-    
-    if (savedLocation) {
-      // すでに位置情報が保存されている場合
-      locationElement.querySelector('span').textContent = savedLocation;
-      locationStatus.textContent = '🎖 あなたが初めてこのサイトを訪れた場所が記録されています';
-      
-      // 住所も表示
-      if (savedAddress) {
-        addressElement.querySelector('span').textContent = savedAddress;
-      } else {
-        // 位置情報はあるが住所がない場合（古いバージョンからの移行）
-        addressElement.querySelector('span').textContent = '変換中...';
-        const coords = savedLocation.match(/緯度: ([\d.]+), 経度: ([\d.]+)/);
-        if (coords && coords.length === 3) {
-          const latitude = coords[1];
-          const longitude = coords[2];
-          
-          // 非同期で住所を取得
-          getAddressFromCoordinates(latitude, longitude).then(address => {
-            localStorage.setItem('8000000bit_address', address);
-            addressElement.querySelector('span').textContent = address;
-          });
-        }
-      }
-    } else {
-      // 位置情報がまだ保存されていない場合
-      locationElement.querySelector('span').textContent = '未記録';
-      addressElement.querySelector('span').textContent = '未記録';
-      locationPrompt.classList.remove('hidden'); // 位置情報取得の案内を表示
-    }
-    
-    // 住所を取得する関数
-    async function getAddressFromCoordinates(latitude, longitude) {
-      try {
-        // OpenStreetMapのNominatim APIを使用（利用規約に注意）
-        const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1&accept-language=ja`);
-        const data = await response.json();
-        
-        // 応答から住所を抽出
-        if (data && data.display_name) {
-          return data.display_name;
-        } else {
-          return '住所の取得に失敗しました';
-        }
-      } catch (error) {
-        console.error('住所の変換エラー:', error);
-        return '住所の変換中にエラーが発生しました';
-      }
-    }
-    
-    // 位置情報取得ボタンのイベントリスナー
-    locationButton.addEventListener('click', function() {
-      if (navigator.geolocation) {
-        locationElement.querySelector('span').textContent = '取得中...';
-        addressElement.querySelector('span').textContent = '取得中...';
-        locationButton.disabled = true;
-        locationButton.classList.add('opacity-50');
-        locationStatus.textContent = '位置情報を取得しています...';
-        
-        navigator.geolocation.getCurrentPosition(
-          // 成功時
-          async function(position) {
-            const latitude = position.coords.latitude.toFixed(6);
-            const longitude = position.coords.longitude.toFixed(6);
-            const locationText = `緯度: ${latitude}, 経度: ${longitude}`;
-            
-            // 位置情報をローカルストレージに保存（一度だけ）
-            localStorage.setItem('8000000bit_location', locationText);
-            locationElement.querySelector('span').textContent = locationText;
-            
-            // 住所を取得中のメッセージ
-            addressElement.querySelector('span').textContent = '場所を特定しています...';
-            locationStatus.textContent = '現在地の住所情報を取得しています...';
-            
-            // 住所を取得して表示
-            const address = await getAddressFromCoordinates(latitude, longitude);
-            localStorage.setItem('8000000bit_address', address);
-            addressElement.querySelector('span').textContent = address;
-            
-            // 取得が完了したらプロンプトを非表示にして成功メッセージを表示
-            locationPrompt.classList.add('hidden');
-            locationStatus.textContent = '🎉 記念に現在地を記録しました！この記録は今後のアクセスでも見ることができます';
-          },
-          // 失敗時
-          function(error) {
-            let errorMessage;
-            switch(error.code) {
-              case error.PERMISSION_DENIED:
-                errorMessage = '位置情報の使用が許可されませんでした';
-                break;
-              case error.POSITION_UNAVAILABLE:
-                errorMessage = '現在地を特定できませんでした';
-                break;
-              case error.TIMEOUT:
-                errorMessage = '位置情報の取得に時間がかかりすぎました';
-                break;
-              default:
-                errorMessage = '不明なエラーが発生しました';
-            }
-            locationElement.querySelector('span').textContent = errorMessage;
-            addressElement.querySelector('span').textContent = '取得できませんでした';
-            
-            // エラー時はボタンを有効に戻して再試行可能にする
-            locationButton.disabled = false;
-            locationButton.classList.remove('opacity-50');
-            locationStatus.textContent = '再度試してみてください。または、このまま記録なしで続けることもできます。';
-          }
-        );
-      } else {
-        locationElement.querySelector('span').textContent = 'お使いのブラウザでは対応していません';
-        addressElement.querySelector('span').textContent = '取得できません';
-        locationStatus.textContent = 'お使いのブラウザでは位置情報を取得できないため、記録は残せません。';
-      }
-    });
-  });
-</script>
+<div class="yao-site" data-controller="brand">
+  <a class="yao-skip" href="#main-content">本文へ移動</a>
+
+  <header class="yao-header">
+    <a class="yao-logo" href="<%= root_path %>" aria-label="8000000bit ホーム">
+      <svg viewBox="360 328 720 155" role="img" aria-label="8000000bit">
+        <image href="<%= asset_path("8000000bit/logo.svg") %>" width="1440" height="810"></image>
+      </svg>
+    </a>
+
+    <nav class="yao-nav" aria-label="メインナビゲーション">
+      <a href="#idea">考え方</a>
+      <a href="#work">試していること</a>
+      <a href="#about">人について</a>
+    </nav>
+
+    <details class="yao-menu" data-brand-target="menu">
+      <summary>Menu</summary>
+      <nav aria-label="モバイルナビゲーション" data-action="click->brand#closeMenu">
+        <a href="#idea">考え方</a>
+        <a href="#work">試していること</a>
+        <a href="#about">人について</a>
+      </nav>
+    </details>
+  </header>
+
+  <main id="main-content">
+    <section class="yao-hero yao-hero--story" aria-labelledby="hero-title">
+      <%= render "logo_story" %>
+      <div class="yao-hero-copy">
+        <p class="yao-eyebrow">Rikuya Kuwabara / Independent studio</p>
+        <h1 id="hero-title">小さく、つくる。<br><em>全体を、変える。</em></h1>
+        <p>プロトタイプから始めて、仕事と仕組みを少しずつ良くする。</p>
+      </div>
+
+    </section>
+
+    <%# Temporary visual study. Copy and page structure remain open for revision. %>
+    <%= render "cloud_study", side: "left", study_id: "intro" %>
+
+    <section class="yao-origin yao-reveal" id="idea" data-brand-target="reveal" aria-labelledby="origin-title">
+      <div class="yao-origin-figure" aria-hidden="true">
+        <span class="yao-seed"></span>
+        <div class="yao-orbit yao-orbit--one"></div>
+        <div class="yao-orbit yao-orbit--two"></div>
+        <div class="yao-orbit yao-orbit--three"></div>
+      </div>
+      <div class="yao-origin-copy">
+        <h2 id="origin-title">一は全。</h2>
+        <p>8000000bitは、ITの世界では1メガバイト。今では小さな単位です。でも「八百万」と読めば、数えきれない広がりを持つ言葉になります。</p>
+        <p>最初から大きく変えようとはしません。ひとつの小さなアプリ、ひとつの業務改善から始めて、触りながら全体に合う形へ育てます。</p>
+      </div>
+    </section>
+
+    <section class="yao-capabilities" aria-labelledby="capabilities-title">
+      <div class="yao-capabilities-intro yao-reveal" data-brand-target="reveal">
+        <h2 id="capabilities-title">考えることと、<br>つくることの間にいる。</h2>
+      </div>
+
+      <div class="yao-capability-list">
+        <article class="yao-capability yao-reveal" data-brand-target="reveal">
+          <h3>プロトタイプをつくる</h3>
+          <p>まだ輪郭のないアイデアを、まず触れられるWebアプリケーションにします。</p>
+          <span>Web application / MVP</span>
+        </article>
+        <article class="yao-capability yao-reveal" data-brand-target="reveal">
+          <h3>業務を整える</h3>
+          <p>今あるやり方をよく見て、守るものと変えるものを分けながら仕組みにします。</p>
+          <span>Workflow / DX</span>
+        </article>
+        <article class="yao-capability yao-reveal" data-brand-target="reveal">
+          <h3>つくり方を伝える</h3>
+          <p>現場の題材で手を動かし、自分たちで試し続けられる研修を組み立てます。</p>
+          <span>Training / Workshop</span>
+        </article>
+      </div>
+    </section>
+
+    <%= render "cloud_study", side: "right", study_id: "work" %>
+
+    <section class="yao-work" id="work" aria-labelledby="work-title">
+      <div class="yao-work-heading yao-reveal" data-brand-target="reveal">
+        <p class="yao-eyebrow">Explorations</p>
+        <h2 id="work-title">試していること</h2>
+      </div>
+
+      <article class="yao-project-card yao-project-card--exploration yao-reveal" data-brand-target="reveal">
+        <div class="yao-project-copy">
+          <h3>占いを軸に、<br>いろいろ、つくってみる。</h3>
+          <p>占い師として活動しながら、占いを軸にしたプロダクトづくりに取り組んでいます。Webだけでなく、VRや電子工作にもチャレンジ中です。</p>
+          <p>まだ試している途中のものもあります。手を動かしながら、できることを少しずつ増やしています。</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="yao-respect yao-reveal" data-brand-target="reveal" aria-labelledby="respect-title">
+      <div class="yao-respect-pattern" aria-hidden="true">
+        <% 24.times do %><i></i><% end %>
+      </div>
+      <div class="yao-respect-copy">
+        <h2 id="respect-title">壊す前に、<br>よく見る。</h2>
+        <p>効率だけで測れば、消したくなるものがあります。けれど、既存の仕組みには、そこで働く人の工夫や思いが残っています。</p>
+        <p>どんなものにも価値が宿るという、八百万の神々の精神で接する。変えることと同じくらい、尊重することを大切にしています。</p>
+      </div>
+    </section>
+
+    <%= render "cloud_study", side: "left", study_id: "about" %>
+
+    <section class="yao-about" id="about" aria-labelledby="about-title">
+      <div class="yao-about-name yao-reveal" data-brand-target="reveal">
+        <span aria-hidden="true">R</span>
+        <h2 id="about-title">桑原 陸也<small>Rikuya Kuwabara</small></h2>
+      </div>
+      <div class="yao-about-copy yao-reveal" data-brand-target="reveal">
+        <p class="yao-about-lead">エンジニア、研修講師。<br>8000000bitを一人で運営しています。</p>
+        <p>2012年からWebシステム開発に携わり、現在は開発とDX人材育成を行き来しています。コードを書くことも、人に伝えることも、「わからない」を動く形にする仕事だと考えています。</p>
+        <p>関心領域は、行動経済学、心理学、認知科学、脳科学、VR、個人開発。「ITで人を楽しませる」がモットーです。</p>
+        <a class="yao-text-link" href="https://note.com/8000000bit" target="_blank" rel="noreferrer">noteで文章を読む <i aria-hidden="true">↗</i></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="yao-footer">
+    <div class="yao-footer-logo" aria-hidden="true">
+      <span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <div class="yao-footer-copy">
+      <strong>8000000bit</strong>
+      <span>ヤオヨロズビット</span>
+      <small>© <%= Time.current.year %> Rikuya Kuwabara</small>
+    </div>
+  </footer>
+</div>

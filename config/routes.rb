@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root "app#index"
   get "/app", to: "app#index"
 
   # RabbitHole routes
