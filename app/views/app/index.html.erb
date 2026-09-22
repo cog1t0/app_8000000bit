@@ -54,6 +54,7 @@
     <%= render "cloud_study", side: "left", study_id: "intro" %>
 
     <section class="yao-origin yao-reveal" id="idea" data-brand-target="reveal" aria-labelledby="origin-title">
+      <div class="yao-section-heading"><span aria-hidden="true">01</span><p>考え方</p></div>
       <div class="yao-origin-figure" aria-hidden="true">
         <span class="yao-seed"></span>
         <div class="yao-orbit yao-orbit--one"></div>
@@ -94,56 +95,39 @@
     <%= render "cloud_study", side: "right", study_id: "work" %>
 
     <section class="yao-work" id="work" aria-labelledby="work-title">
-      <div class="yao-work-heading yao-reveal" data-brand-target="reveal">
-        <p class="yao-eyebrow">Explorations</p>
+      <div class="yao-section-heading">
+        <span aria-hidden="true">02</span>
         <h2 id="work-title">試していること</h2>
       </div>
 
       <article class="yao-project-card yao-project-card--exploration yao-reveal" data-brand-target="reveal">
         <div class="yao-project-copy">
           <h3>占いを軸に、<br>いろいろ、つくってみる。</h3>
-          <p>占い師として活動しながら、占いを軸にしたプロダクトづくりに取り組んでいます。Webだけでなく、VRや電子工作にもチャレンジ中です。</p>
+          <p>占い師として活動しながら、占いを軸にしたプロダクトづくりに取り組んでいます。今後は「占い×Tech」をテーマに、アプリ開発だけでなく、VRや電子工作にもチャレンジしていく予定です。</p>
           <p>まだ試している途中のものもあります。手を動かしながら、できることを少しずつ増やしています。</p>
         </div>
       </article>
     </section>
 
-    <section class="yao-respect yao-reveal" data-brand-target="reveal" aria-labelledby="respect-title">
-      <div class="yao-respect-pattern" aria-hidden="true">
-        <% 24.times do %><i></i><% end %>
-      </div>
-      <div class="yao-respect-copy">
-        <h2 id="respect-title">壊す前に、<br>よく見る。</h2>
-        <p>効率だけで測れば、消したくなるものがあります。けれど、既存の仕組みには、そこで働く人の工夫や思いが残っています。</p>
-        <p>どんなものにも価値が宿るという、八百万の神々の精神で接する。変えることと同じくらい、尊重することを大切にしています。</p>
-      </div>
-    </section>
-
     <%= render "cloud_study", side: "left", study_id: "about" %>
 
     <section class="yao-about" id="about" aria-labelledby="about-title">
+      <div class="yao-section-heading"><span aria-hidden="true">03</span><p>人について</p></div>
       <div class="yao-about-name yao-reveal" data-brand-target="reveal">
         <span aria-hidden="true">R</span>
         <h2 id="about-title">桑原 陸也<small>Rikuya Kuwabara</small></h2>
       </div>
       <div class="yao-about-copy yao-reveal" data-brand-target="reveal">
-        <p class="yao-about-lead">エンジニア、研修講師。<br>8000000bitを一人で運営しています。</p>
-        <p>2012年からWebシステム開発に携わり、現在は開発とDX人材育成を行き来しています。コードを書くことも、人に伝えることも、「わからない」を動く形にする仕事だと考えています。</p>
-        <p>関心領域は、行動経済学、心理学、認知科学、脳科学、VR、個人開発。「ITで人を楽しませる」がモットーです。</p>
-        <a class="yao-text-link" href="https://note.com/8000000bit" target="_blank" rel="noreferrer">noteで文章を読む <i aria-hidden="true">↗</i></a>
+        <p>出雲出身。経済学部で学びましたが、地元への愛着からRubyの道へ。2012年からWebエンジニアとして、さまざまな開発に携わってきました。</p>
+        <p>AIの進化に脅威を感じ、「自分にも、もうひとつ軸がほしい」と思うように。理屈だけではない世界も見てみたくて、占いの勉強を始めました。</p>
+        <p>現在は会社員のかたわら、副業で新興占い協会の技術顧問として、ミコトNaviの開発に携わっています。</p>
+        <p>今後は「占い×Tech」をテーマに、アプリ開発だけでなく、VRや電子工作にもチャレンジしていく予定です。</p>
+        <div class="yao-social-links">
+          <a class="yao-text-link" href="https://note.com/8000000bit" target="_blank" rel="noopener noreferrer">noteで文章を読む <i aria-hidden="true">↗</i></a>
+          <a class="yao-text-link" href="https://x.com/r19_tech" target="_blank" rel="noopener noreferrer">X / @r19_tech <i aria-hidden="true">↗</i></a>
+        </div>
       </div>
     </section>
   </main>
 
-  <footer class="yao-footer">
-    <div class="yao-footer-logo" aria-hidden="true">
-      <span></span><span></span><span></span><span></span>
-      <span></span><span></span><span></span><span></span>
-    </div>
-    <div class="yao-footer-copy">
-      <strong>8000000bit</strong>
-      <span>ヤオヨロズビット</span>
-      <small>© <%= Time.current.year %> Rikuya Kuwabara</small>
-    </div>
-  </footer>
 </div>

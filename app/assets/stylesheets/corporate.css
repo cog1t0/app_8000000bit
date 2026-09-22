@@ -588,6 +588,17 @@
   letter-spacing: 0.04em;
 }
 
+.yao-social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem 2rem;
+  margin-top: 3rem;
+}
+
+.yao-social-links .yao-text-link {
+  margin-top: 0;
+}
+
 .yao-text-link i {
   color: var(--yao-red);
   font-style: normal;
@@ -1094,6 +1105,47 @@
   .yao-orbit {
     animation: none !important;
   }
+}
+
+/* Shared chapter markers keep the navigation and section boundaries aligned. */
+.yao-origin,
+.yao-work,
+.yao-about {
+  border-top: 1px solid rgba(36, 35, 31, 0.3);
+  padding-top: clamp(1.5rem, 3vw, 3rem);
+  padding-bottom: clamp(4rem, 8vw, 8rem);
+  min-height: 0;
+  scroll-margin-top: 2rem;
+  row-gap: clamp(3rem, 6vw, 6rem);
+}
+
+.yao-section-heading {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  gap: 1.25rem;
+}
+
+.yao-section-heading > span {
+  color: var(--yao-red);
+  font: 500 0.8rem ui-monospace, monospace;
+}
+
+.yao-section-heading > p,
+.yao-section-heading > h2 {
+  margin: 0;
+  font-size: clamp(1.25rem, 2.5vw, 2rem);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+}
+
+.yao-work > .yao-section-heading {
+  margin-bottom: clamp(3rem, 6vw, 6rem);
+}
+
+.yao-about-copy > p:first-child {
+  margin-top: 0;
 }
 
 @media (prefers-reduced-transparency: reduce) {

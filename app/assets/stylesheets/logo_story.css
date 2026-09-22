@@ -5,9 +5,9 @@
   grid-template-rows: minmax(20rem, 1fr) auto;
   align-items: center;
   gap: 0;
-  min-height: 100svh;
-  padding-top: 6.5rem;
-  padding-bottom: clamp(2.5rem, 5vh, 4.5rem);
+  min-height: 70svh;
+  padding-top: 5rem;
+  padding-bottom: clamp(1.5rem, 2vh, 2rem);
   background:
     radial-gradient(ellipse 72% 54% at 50% 36%, #ffffff 0%, #f8f6f0 65%, transparent 100%),
     var(--yao-bg);
@@ -155,9 +155,9 @@
 @media (max-width: 767px) {
   .yao-hero--story {
     grid-template-rows: minmax(17rem, 1fr) auto;
-    min-height: 100svh;
+    min-height: 78svh;
     padding-top: 5.5rem;
-    padding-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
     background:
       radial-gradient(ellipse 100% 42% at 45% 35%, #ffffff 0%, #f8f6f0 65%, transparent 100%),
       var(--yao-bg);
