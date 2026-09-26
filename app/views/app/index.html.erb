@@ -1,12 +1,12 @@
-<% content_for :title, "8000000bit（ヤオヨロズビット）| 桑原陸也" %>
-<% content_for :description, "8000000bit（ヤオヨロズビット）は、桑原陸也が運営する個人開発スタジオです。小さなプロトタイプから、仕事や仕組み全体の変化をつくります。" %>
+<% content_for :title, "8000000bit（ヤオヨロズビット）| 八雲りく" %>
+<% content_for :description, "8000000bit（ヤオヨロズビット）は、八雲りくが運営する個人開発スタジオです。小さなプロトタイプから、仕事や仕組み全体の変化をつくります。" %>
 <% content_for :main_class, "yao-main" %>
 <% content_for :full_bleed, true %>
 <% content_for :head do %>
   <%= stylesheet_link_tag "corporate", "data-turbo-track": "reload" %>
   <%= stylesheet_link_tag "logo_story", "data-turbo-track": "reload" %>
   <%= stylesheet_link_tag "cloud_study", "data-turbo-track": "reload" %>
-  <meta property="og:title" content="8000000bit | 桑原陸也">
+  <meta property="og:title" content="8000000bit | 八雲りく">
   <meta property="og:description" content="小さくつくり、全体を変える。個人開発スタジオ、ヤオヨロズビット。">
   <meta property="og:type" content="website">
   <meta property="og:image" content="<%= asset_url("8000000bit/hero-shadow.webp") %>">
@@ -43,7 +43,7 @@
     <section class="yao-hero yao-hero--story" aria-labelledby="hero-title">
       <%= render "logo_story" %>
       <div class="yao-hero-copy">
-        <p class="yao-eyebrow">Rikuya Kuwabara / Independent studio</p>
+        <p class="yao-eyebrow">八雲りく / Independent studio</p>
         <h1 id="hero-title">小さく、つくる。<br><em>全体を、変える。</em></h1>
         <p>プロトタイプから始めて、仕事と仕組みを少しずつ良くする。</p>
       </div>
@@ -103,10 +103,29 @@
       <article class="yao-project-card yao-project-card--exploration yao-reveal" data-brand-target="reveal">
         <div class="yao-project-copy">
           <h3>占いを軸に、<br>いろいろ、つくってみる。</h3>
-          <p>占い師として活動しながら、占いを軸にしたプロダクトづくりに取り組んでいます。今後は「占い×Tech」をテーマに、アプリ開発だけでなく、VRや電子工作にもチャレンジしていく予定です。</p>
+          <p>占い師として活動しながら、占いを軸にしたプロダクトづくりに取り組んでいます。「占い×Tech」をテーマに、Webアプリや電子工作を試し、これからVRにも取り組んでいきます。</p>
           <p>まだ試している途中のものもあります。手を動かしながら、できることを少しずつ増やしています。</p>
         </div>
       </article>
+
+      <div class="yao-work-notes yao-reveal" data-brand-target="reveal" aria-label="活動の記録">
+        <article class="yao-work-note">
+          <div>
+            <p class="yao-work-note-kind">Exhibition / 2026</p>
+            <h3>生成AIなんでも展示会 Vol.6</h3>
+            <p>占い×AIの試作を携えて出展しました。会場で話して気づいたことを、レポートにまとめています。</p>
+          </div>
+          <a class="yao-text-link" href="https://note.com/8000000bit/n/n36f4b1d9888d" target="_blank" rel="noopener noreferrer">出展レポートを読む <i aria-hidden="true">↗</i></a>
+        </article>
+        <article class="yao-work-note">
+          <div>
+            <p class="yao-work-note-kind">Electronics / 2026</p>
+            <h3>電子蝋燭タイマー</h3>
+            <p>展示ブースの小道具として制作。AIに相談しながら、電子工作に再挑戦した過程を記録しました。</p>
+          </div>
+          <a class="yao-text-link" href="https://note.com/8000000bit/n/n9ee4e17cb193" target="_blank" rel="noopener noreferrer">制作記録を読む <i aria-hidden="true">↗</i></a>
+        </article>
+      </div>
     </section>
 
     <%= render "cloud_study", side: "left", study_id: "about" %>
@@ -115,13 +134,13 @@
       <div class="yao-section-heading"><span aria-hidden="true">03</span><p>人について</p></div>
       <div class="yao-about-name yao-reveal" data-brand-target="reveal">
         <span aria-hidden="true">R</span>
-        <h2 id="about-title">桑原 陸也<small>Rikuya Kuwabara</small></h2>
+        <h2 id="about-title">八雲りく<small>8000000bit</small></h2>
       </div>
       <div class="yao-about-copy yao-reveal" data-brand-target="reveal">
         <p>出雲出身。経済学部で学びましたが、地元への愛着からRubyの道へ。2012年からWebエンジニアとして、さまざまな開発に携わってきました。</p>
         <p>AIの進化に脅威を感じ、「自分にも、もうひとつ軸がほしい」と思うように。理屈だけではない世界も見てみたくて、占いの勉強を始めました。</p>
         <p>現在は会社員のかたわら、副業で新興占い協会の技術顧問として、ミコトNaviの開発に携わっています。</p>
-        <p>今後は「占い×Tech」をテーマに、アプリ開発だけでなく、VRや電子工作にもチャレンジしていく予定です。</p>
+        <p>今後は「占い×Tech」をテーマに、アプリ開発や電子工作を続けながら、VRにもチャレンジしていく予定です。</p>
         <div class="yao-social-links">
           <a class="yao-text-link" href="https://note.com/8000000bit" target="_blank" rel="noopener noreferrer">noteで文章を読む <i aria-hidden="true">↗</i></a>
           <a class="yao-text-link" href="https://x.com/r19_tech" target="_blank" rel="noopener noreferrer">X / @r19_tech <i aria-hidden="true">↗</i></a>
