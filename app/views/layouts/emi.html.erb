@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="慧己ちゃんのホームページへようこそ。つくったものを、少しずつ。">
+    <title>慧己ちゃんのホームページ</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "emi", "data-turbo-track": "reload" %>
+  </head>
+  <body class="emi-site">
+    <a class="emi-skip" href="#main">ほんぶんへ</a>
+    <%= yield %>
+  </body>
+</html>

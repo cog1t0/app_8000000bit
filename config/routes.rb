@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  namespace :emi do
+    root "home#index"
+    get "karuta", to: "karuta#index"
+    get "karuta/files/:name", to: "karuta#file", constraints: { name: /[^\/]+/ }, format: false, as: :karuta_file
+  end
+
   get "/app", to: "app#index"
 
   # RabbitHole routes
