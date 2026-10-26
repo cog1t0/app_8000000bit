@@ -14,12 +14,12 @@ module App8000000bit
     config.i18n.default_locale = :jp
     # 本番環境用の認証情報ファイルを設定
     if Rails.env.production?
-      config.credentials.content_path = 'config/credentials/production.yml.enc'
+      config.credentials.content_path = "config/credentials/production.yml.enc"
       # 本番環境ではRAILS_MASTER_KEY環境変数を使用します
       # production.keyファイルはGitリポジトリにpushせず、
       # 環境変数またはデプロイ時に安全な方法で提供します
     end
-    
+
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.

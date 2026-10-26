@@ -119,7 +119,7 @@ module Features
       def normalized_duration_days(value)
         days = value.to_i
         days = BoardBuilder::DEFAULT_DURATION_DAYS if days <= 0
-        [days, 120].min
+        [ days, 120 ].min
       end
 
       def ensure_setup_completed!

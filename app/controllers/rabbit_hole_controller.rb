@@ -62,7 +62,7 @@ class RabbitHoleController < ApplicationController
     end
     unless @token && @code && @expires_at
       redirect_to rabbit_hole_form_path, alert: "作成情報が見つかりません"
-      return
+      nil
     end
   end
 

@@ -432,7 +432,7 @@ class MeishikiFetcher
     end
 
     # かなり脆弱だが最低限の抽出を試みる
-    tenchu_html = find_between.call(text, '<div class="tenchu">', '</div>')
+    tenchu_html = find_between.call(text, '<div class="tenchu">', "</div>")
     tenchu_vals = tenchu_html&.scan(/<div>\s*([^<]+)\s*<\/div>/)&.flatten&.map { _1.strip }
     # 同様に pick もローカル関数化
     pick = ->(src, sel) do
