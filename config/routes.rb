@@ -7,12 +7,6 @@ Rails.application.routes.draw do
 
   get "/app", to: "app#index"
 
-  # RabbitHole routes
-  post "/rabbit-hole", to: "rabbit_hole#create", as: :rabbit_hole_create
-  get  "/rabbit-hole", to: "rabbit_hole#show", as: :rabbit_hole
-  get  "/rabbit-hole/created", to: "rabbit_hole#created", as: :rabbit_hole_created
-  get  "/rabbit-hole-form", to: "rabbit_hole#form", as: :rabbit_hole_form
-
   # よりみちびんご
   scope :yorimichi, module: "features/yorimichi_bingo", as: :yorimichi_bingo do
     get "/", to: "bingo_cards#start", as: :start

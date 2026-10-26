@@ -290,17 +290,10 @@ class MeishikiFetcher
 
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = (uri.scheme == "https")
-    # 簡易回避/設定: 環境変数で CA バンドル or 検証無効を指定可能にする
-    # 1) SSL_CA_FILE: 明示 CA パス
-    # 2) MEISHIKI_FETCHER_INSECURE=1 で VERIFY_NONE (開発専用)
+    # Custom CA bundles are supported; peer verification is always required.
     if http.use_ssl?
       debug = ENV["MEISHIKI_FETCHER_SSL_DEBUG"] == "1"
-      if ENV["MEISHIKI_FETCHER_INSECURE"] == "1"
-        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-        warn "[MeishikiFetcher][SSL] WARNING: verification disabled (MEISHIKI_FETCHER_INSECURE=1)" if debug
-      else
-        http.verify_mode = OpenSSL::SSL::VERIFY_PEER
-      end
+      http.verify_mode = OpenSSL::SSL::VERIFY_PEER
 
       # Allow multiple CA files separated by ':' (Unix PATH style). Each is added to a store
       if (ca_env = ENV["SSL_CA_FILE"]).present?
