@@ -45,3 +45,11 @@ header #start{grid-column:1/-1;display:flex;justify-content:space-between;align-
 @media(max-width:420px){header .brand{font-size:17px}header #edit{font-size:11px}}
 
 #voice-player{width:220px;height:32px;max-width:100%}.voice-controls{gap:8px}.match-screen .voice-controls{flex-wrap:wrap}.match-screen .voice-controls span{font-size:10px}@media(max-width:600px){#voice-player{width:175px}}
+
+/* Kana is an overlay, so the original artwork and fixed board slots stay intact. */
+.card-letter-control{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--ink)}
+.card-letter-control select{min-height:36px;padding:5px 8px;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink)}
+.card{container-type:inline-size}
+.card-kana{display:none;position:absolute;top:3%;right:3%;width:30%;aspect-ratio:1;border-radius:50%;align-items:center;justify-content:center;background:#a93930;color:#fff;border:1px solid #fff;font-size:clamp(10px,24cqi,30px);font-weight:700;line-height:1;pointer-events:none;font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif}
+.with-card-letters .card-kana{display:flex}
+.tatami-side:first-child .card-kana{top:auto;right:auto;bottom:3%;left:3%;transform:rotate(180deg)}
