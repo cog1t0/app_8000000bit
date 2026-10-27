@@ -51,6 +51,16 @@ class EmiKarutaTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "malformed basic credentials return unauthorized for page and assets" do
+    [ "Basic #{Base64.strict_encode64('test-neighborhood')}", "Basic #{Base64.strict_encode64(':')}", "Basic !!!", "Basic " ].each do |authorization|
+      [ "/emi/karuta", "/emi/karuta/files/app.js" ].each do |url|
+        get url, headers: { "Authorization" => authorization, "Sec-Fetch-Site" => "same-origin" }
+        assert_response :unauthorized
+        assert_match "Basic", response.headers["WWW-Authenticate"]
+      end
+    end
+  end
+
   test "missing credentials fail closed" do
     %w[EMI_KARUTA_USERNAME EMI_KARUTA_PASSWORD].each do |key|
       saved = ENV.delete(key)
@@ -66,6 +76,7 @@ class EmiKarutaTest < ActionDispatch::IntegrationTest
     get "/emi/karuta", headers: { "Authorization" => @authorization, "Sec-Fetch-Site" => "same-origin" }
     assert_response :success
     assert_select "button#start"
+    assert_select "label input#import[type=file]:not([hidden])", count: 1
     assert_select "script[src^='/emi/karuta/files/']", count: 5
     assert_select "a.brand[href='/emi']"
     get "/emi/karuta/files/card-images.js", headers: { "Authorization" => @authorization, "Sec-Fetch-Site" => "same-origin" }
@@ -76,6 +87,8 @@ class EmiKarutaTest < ActionDispatch::IntegrationTest
     get "/emi/karuta/files/style.css", headers: { "Authorization" => @authorization, "Sec-Fetch-Site" => "same-origin" }
     assert_response :success
     assert_no_match(/@import|https:\/\//, response.body)
+    assert_match(/\A:root\s*\{/, response.body)
+    assert_includes response.body, "--green:#365844"
   end
 
   test "cross-site script embedding is denied even with credentials" do

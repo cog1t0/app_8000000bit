@@ -67,8 +67,8 @@ module Emi
       end
 
       authenticate_or_request_with_http_basic("Emi Karuta") do |given_user, given_password|
-        ActiveSupport::SecurityUtils.secure_compare(Digest::SHA256.hexdigest(given_user), Digest::SHA256.hexdigest(username)) &
-          ActiveSupport::SecurityUtils.secure_compare(Digest::SHA256.hexdigest(given_password), Digest::SHA256.hexdigest(password))
+        ActiveSupport::SecurityUtils.secure_compare(Digest::SHA256.hexdigest(given_user.to_s), Digest::SHA256.hexdigest(username)) &
+          ActiveSupport::SecurityUtils.secure_compare(Digest::SHA256.hexdigest(given_password.to_s), Digest::SHA256.hexdigest(password))
       end
     end
   end
