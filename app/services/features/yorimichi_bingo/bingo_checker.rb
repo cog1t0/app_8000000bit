@@ -35,7 +35,7 @@ module Features
         grid = rows
         left_to_right = (0...GRID_SIZE).map { |i| grid[i][i] }
         right_to_left = (0...GRID_SIZE).map { |i| grid[i][GRID_SIZE - 1 - i] }
-        [left_to_right, right_to_left]
+        [ left_to_right, right_to_left ]
       end
 
       def complete_grid?
