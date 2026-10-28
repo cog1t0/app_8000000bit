@@ -53,3 +53,15 @@ header #start{grid-column:1/-1;display:flex;justify-content:space-between;align-
 .card-kana{display:none;position:absolute;top:3%;right:3%;width:30%;aspect-ratio:1;border-radius:50%;align-items:center;justify-content:center;background:#a93930;color:#fff;border:1px solid #fff;font-size:clamp(10px,24cqi,30px);font-weight:700;line-height:1;pointer-events:none;font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif}
 .with-card-letters .card-kana{display:flex}
 .tatami-side:first-child .card-kana{top:auto;right:auto;bottom:3%;left:3%;transform:rotate(180deg)}
+
+/* Keep the captured card visible long enough to locate the opponent's hand. */
+.card.cpu-capture,.match-screen .card.taken.cpu-capture{opacity:1;transform:none;z-index:3;border-color:#b44e38;box-shadow:0 0 0 3px #fbe4a8,0 0 0 6px #a23e2c;pointer-events:none}
+.card.cpu-capture:after{display:none}
+.capture-effect{position:absolute;inset:0;pointer-events:none;display:grid;place-items:center;z-index:4}
+.capture-hand{display:block;width:95%;max-width:110px;aspect-ratio:9/10;line-height:1;transform:rotate(180deg);filter:drop-shadow(0 3px 2px #42241255);animation:cpu-hand-tap 200ms cubic-bezier(.23,1,.32,1) both}
+.capture-caption{position:absolute;bottom:3%;left:3%;right:3%;padding:3px 0;border-radius:3px;background:#963824;color:#fff;font-size:clamp(9px,16cqi,18px);font-weight:700;text-align:center;line-height:1.2}
+.capture-score{color:#963824;background:#fff0c2;border-radius:4px;box-shadow:0 0 0 4px #fff0c2}
+@keyframes cpu-hand-tap{from{opacity:0;transform:translateY(-55%) rotate(180deg) scale(1.12)}to{opacity:1;transform:translateY(0) rotate(180deg) scale(1)}}
+@media(prefers-reduced-motion:reduce){.capture-hand{animation:none}}
+
+.capture-hand svg{display:block;width:100%;height:100%;overflow:visible}
