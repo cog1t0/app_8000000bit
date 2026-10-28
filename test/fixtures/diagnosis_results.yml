@@ -3,7 +3,7 @@
 one:
   token: diagnosis-one
   meishiki_master: one
-  fortune_type: general
+  fortune_type: 総合運
   memo: MyText
   ai_summary: MyText
   ai_advice: MyText
@@ -12,7 +12,7 @@ one:
 two:
   token: diagnosis-two
   meishiki_master: two
-  fortune_type: general
+  fortune_type: 仕事運
   memo: MyText
   ai_summary: MyText
   ai_advice: MyText

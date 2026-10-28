@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     get "karuta/files/:name", to: "karuta#file", constraints: { name: /[^\/]+/ }, format: false, as: :karuta_file
   end
 
+  root "app#index"
   get "/app", to: "app#index"
 
   # よりみちびんご
