@@ -65,3 +65,11 @@ header #start{grid-column:1/-1;display:flex;justify-content:space-between;align-
 @media(prefers-reduced-motion:reduce){.capture-hand{animation:none}}
 
 .capture-hand svg{display:block;width:100%;height:100%;overflow:visible}
+
+.pair-screen .tatami-side{width:min(100%,75vh);aspect-ratio:auto;height:calc((100% - 24px)/2);max-height:none}
+.pair-screen .tatami-side:first-child{transform:rotate(180deg)}
+.pair-screen .tatami-side:first-child .card img{transform:none}
+.pair-screen .tatami-side:first-child .card-kana{inset:3% 3% auto auto;transform:none}
+.pair-screen .card{touch-action:manipulation}
+.pair-screen #you-label{color:#194b37}
+.pair-screen #cpu-label{color:#873527}

@@ -21,6 +21,7 @@ function setup(ids) {
   vm.runInContext(source.slice(source.indexOf('// Capture feedback'), source.indexOf('function cardImage')),context);
   vm.runInContext(`let match=new KarutaMatch(${JSON.stringify(ids)},true),remaining=[...match.remaining],active=true,phase='playing',locked=false,target=${ids[0]},nextTimer,cpuTimer,roundLevel='hard';
     let finished=false;function render(){remaining=[...match.remaining];}function clearActions(){clearCaptureFeedback();clearTimeout(nextTimer);clearTimeout(cpuTimer);}function finish(){clearActions();finished=true;active=false;render();}function question(){}function countdown(){}`,context);
+  vm.runInContext(source.slice(source.indexOf('function playerName('),source.indexOf('function drawCards(')),context);
   vm.runInContext(source.slice(source.indexOf('function pick('),source.indexOf('function pause(')),context);
   vm.runInContext(source.slice(source.indexOf('function scheduleCPU('),source.indexOf('function countdown(')),context);
   vm.runInContext('Math.random=()=>.5',context);
@@ -65,3 +66,12 @@ assert.equal(game.timers.size,0,'pause cancels the pending capture');
 game=setup([1,2,3,4]);game.run('scheduleCPU()');fire(game,2300);game.run('pick(2)');fire(game,150);
 assert.equal(game.run('match.hands.cpu.length'),1,'a wrong human card does not steal the CPU capture');
 console.log('PASS: human-first close calls, final pair, late clicks, pause and mis-touch arbitration');
+
+game=setup([1,2,3,4]);
+game.run('match.localPair=true;scheduleCPU()');
+assert.equal(game.timers.size,0,'shared-device play has no automatic opponent');
+game.run("pick(1,'cpu');pick(1,'you')");
+assert.equal(game.run('match.hands.cpu.length'),1,'upper player scores');
+assert.equal(game.run('match.hands.you.length'),0,'second tap cannot claim the same card');
+assert([...game.cards.values()].every(c=>!c.classList.contains('cpu-capture')));
+assert.match(game.fields.feedback.textContent,/うえの ひと/);
