@@ -37,9 +37,9 @@ one:
   energy_year: MyString
 
 two:
-  year: 1
+  year: 2
   month: 1
-  day: 1
+  day: 2
   sex: MyString
   tenchu_1: MyString
   tenchu_2: MyString

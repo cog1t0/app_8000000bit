@@ -22,4 +22,4 @@ If `repo.pubcert.jp` is not resolvable, manually obtain the intermediate via a t
 Set `SSL_CA_FILE` to the absolute path of this PEM when running the fetcher (development / jobs):
    export SSL_CA_FILE="$(pwd)/config/certs/JPRS_DVCA_G4.pem:$(pwd)/config/certs/SECOM_ROOTCA2.pem"
 
-Avoid using `MEISHIKI_FETCHER_INSECURE=1` except for temporary diagnostics.
+TLS peer verification is always enabled. The legacy `MEISHIKI_FETCHER_INSECURE` setting no longer disables verification. If verification fails, repair the trusted CA chain instead.

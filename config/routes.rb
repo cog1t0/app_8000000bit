@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
-  get "/app", to: "app#index"
+  namespace :emi do
+    root "home#index"
+    get "karuta", to: "karuta#index"
+    get "karuta/files/:name", to: "karuta#file", constraints: { name: /[^\/]+/ }, format: false, as: :karuta_file
+  end
 
-  # RabbitHole routes
-  post "/rabbit-hole", to: "rabbit_hole#create", as: :rabbit_hole_create
-  get  "/rabbit-hole", to: "rabbit_hole#show", as: :rabbit_hole
-  get  "/rabbit-hole/created", to: "rabbit_hole#created", as: :rabbit_hole_created
-  get  "/rabbit-hole-form", to: "rabbit_hole#form", as: :rabbit_hole_form
+  root "app#index"
+  get "/app", to: "app#index"
 
   # よりみちびんご
   scope :yorimichi, module: "features/yorimichi_bingo", as: :yorimichi_bingo do
