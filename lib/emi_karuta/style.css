@@ -74,9 +74,9 @@ header #start{grid-column:1/-1;display:flex;justify-content:space-between;align-
 .pair-screen #you-label{color:#194b37}
 .pair-screen #cpu-label{color:#873527}
 
-/* Each player's grid cell stays tappable around the unframed artwork. */
+/* Each player's grid cell stays tappable around the artwork. */
 .pair-screen .card{container-type:size;display:grid;place-items:center;background:transparent;border:0;box-shadow:none}
-.pair-face{display:block;position:relative;overflow:hidden;width:min(100cqw,68cqh);aspect-ratio:0.68}
+.pair-face{display:block;position:relative;overflow:hidden;width:min(100cqw,68cqh);aspect-ratio:0.68;border:clamp(1px,1cqw,2px) solid white}
 .pair-screen .pair-face img{position:absolute;left:-5.6%;top:-7%;width:111.2%;height:114.5%;object-fit:fill}
 .pair-screen [data-id="27"] .pair-face img{width:115%}
 .pair-screen [data-id="42"] .pair-face img{top:-9%;height:117%}
