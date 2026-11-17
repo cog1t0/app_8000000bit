@@ -31,8 +31,8 @@ module Features
 
       test "detects column and diagonal bingos" do
         items = dup_items
-        [0, 5, 10, 15, 20].each { |idx| items[idx]["checked"] = true }
-        [4, 8, 12, 16, 20].each { |idx| items[idx]["checked"] = true }
+        [ 0, 5, 10, 15, 20 ].each { |idx| items[idx]["checked"] = true }
+        [ 4, 8, 12, 16, 20 ].each { |idx| items[idx]["checked"] = true }
 
         checker = BingoChecker.new(OpenStruct.new(items: items))
         assert_equal 2, checker.bingo_count

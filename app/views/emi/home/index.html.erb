@@ -1,0 +1,30 @@
+<header class="emi-header">
+  <%= link_to emi_root_path, class: "emi-brand", aria: { label: "慧己ちゃんのホームページ トップ" } do %>
+    <span class="emi-stamp" aria-hidden="true">え</span><span>えみちゃんのホームページ</span>
+  <% end %>
+  <a class="emi-parent" href="/app">パパのホームページ <span aria-hidden="true">↗</span></a>
+</header>
+<main id="main">
+  <section class="emi-welcome" aria-labelledby="welcome-title">
+    <div class="emi-welcome-copy">
+      <p class="emi-eyebrow">ようこそ、えみちゃんのばしょへ。</p>
+      <h1 id="welcome-title">こんにちは。<br><span>えみちゃん</span>です。</h1>
+      <p class="emi-intro">つくること。あそぶこと。<br>ここから、すこしずつ。</p>
+      <a class="emi-explore" href="#collection">つくったものを みる <span aria-hidden="true">↓</span></a>
+    </div>
+    <div class="emi-drawing" aria-hidden="true">
+      <span class="emi-sun"></span><span class="emi-cloud"></span>
+      <div class="emi-house"><div class="emi-roof"></div><div class="emi-wall"><span class="emi-window"></span><span class="emi-door"></span></div></div>
+      <span class="emi-ground"></span><span class="emi-flower">✳</span>
+      <p>わたしの、ちいさなホームページ。</p>
+    </div>
+  </section>
+  <section id="collection" class="emi-collection" aria-labelledby="collection-title">
+    <div class="emi-section-heading"><p>すこしずつ、ふえていくよ。</p><h2 id="collection-title">つくったもの</h2></div>
+    <article class="emi-project">
+      <div class="emi-paper-cards" aria-hidden="true"><span>か</span><span>る</span><span>た</span></div>
+      <div class="emi-project-copy"><p class="emi-label">あそび</p><h3>えみのかるた</h3><p>えふだをみつけて、「はいっ！」。<br>みんなで、ふだとりしょうぶ。</p><%= link_to "かるたで あそぶ →", emi_karuta_path, class: "emi-explore", data: { turbo: false } %><p class="emi-label">あそぶには パスワードが ひつようです。</p></div>
+    </article>
+  </section>
+</main>
+<footer class="emi-footer"><span>慧己ちゃんのホームページ</span><span>パパのホームページの、ちいさないっかく。</span><a href="#main">うえにもどる ↑</a></footer>

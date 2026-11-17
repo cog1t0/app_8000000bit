@@ -41,3 +41,5 @@
 /.kamal/registry_password.key
 
 .DS_Store
+/.kamal/emi_karuta_username.key
+/.kamal/emi_karuta_password.key

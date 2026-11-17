@@ -9,7 +9,8 @@ module Features
         card = BingoCard.create!(
           title: "expired",
           items: build_items,
-          expires_at: 1.day.ago
+          expires_at: 1.day.ago,
+          setup_completed_at: 2.days.ago
         )
 
         patch yorimichi_bingo_toggle_path(token: card.token), params: { id: 1 }
@@ -32,10 +33,12 @@ module Features
         end
 
         new_card = BingoCard.order(:created_at).last
-        assert_redirected_to yorimichi_bingo_card_path(token: new_card.token)
+        assert_redirected_to yorimichi_bingo_edit_path(token: new_card.token)
         assert_equal "Reset me", new_card.title
         assert_not_equal card.token, new_card.token
         assert_equal 25, new_card.items.size
+        assert_nil new_card.setup_completed_at
+        assert_empty new_card.selected_category_slugs
       end
 
       private

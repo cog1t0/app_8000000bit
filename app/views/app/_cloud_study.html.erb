@@ -1,0 +1,50 @@
+<%# Removable interlude: original cloud drawing, no changes to approved hero. %>
+<div class="cloud-study cloud-study--<%= side %>"
+     data-controller="cloud-study"
+     data-cloud-study-side-value="<%= side %>"
+     aria-hidden="true">
+  <div class="cloud-study__thread" data-cloud-study-target="thread">
+    <svg viewBox="0 0 1200 200" preserveAspectRatio="none" focusable="false">
+      <path d="M140 96 C320 96 345 155 520 155 S765 83 1050 83" />
+      <rect x="1047" y="80" width="6" height="6" />
+    </svg>
+  </div>
+  <div class="cloud-study__cloud" data-cloud-study-target="cloud">
+    <svg viewBox="0 0 480 190" focusable="false">
+      <defs>
+        <mask id="cloud-noise-<%= study_id %>" x="-20" y="-10" width="520" height="220" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" style="mask-type: luminance">
+          <rect x="-20" y="-10" width="520" height="220" fill="white" />
+          <%# Small missing blocks, confined to the trailing edge of the ink. %>
+          <g fill="black">
+            <rect x="282" y="66" width="12" height="7" />
+            <rect x="310" y="82" width="21" height="6" />
+            <rect x="298" y="99" width="9" height="10" />
+            <rect x="272" y="128" width="13" height="6" />
+            <rect x="349" y="94" width="15" height="7" />
+            <rect x="380" y="83" width="7" height="5" />
+          </g>
+        </mask>
+      </defs>
+      <g mask="url(#cloud-noise-<%= study_id %>)">
+        <path class="cloud-study__silhouette" d="M-16 144 C14 144 19 121 40 126 C49 157 95 164 121 145 C138 166 178 161 190 145 C211 156 247 150 252 128 C271 141 302 128 305 112 C345 137 390 102 414 81 C373 102 344 76 316 79 C320 56 300 39 278 46 C274 22 242 16 225 33 C206 7 166 12 157 39 C139 27 114 39 109 56 C86 42 58 52 57 78 C34 69 11 86 10 106 C-3 96 -16 104 -16 115 Z" />
+        <g class="cloud-study__curls">
+          <path d="M157 39 C147 57 158 75 176 74 C194 73 201 53 188 45 C177 38 166 49 173 56 C177 60 184 57 182 53" />
+          <path d="M109 56 C115 76 106 92 91 89 C78 87 75 73 85 68 C93 64 101 73 95 78" />
+          <path d="M225 33 C224 51 239 64 253 58 C265 53 262 38 252 38 C244 38 241 48 248 50" />
+          <path d="M252 128 C258 110 248 90 229 91 C208 92 202 116 218 124 C231 131 243 116 234 109 C229 105 223 109 225 114" />
+          <path d="M121 145 C132 131 130 113 115 107 C99 100 84 112 89 125 C94 136 108 133 109 124 C109 117 102 116 99 121" />
+          <path d="M40 126 C57 130 70 117 63 104 C56 92 41 97 41 107 C41 114 50 117 53 111" />
+          <path d="M190 145 C197 135 193 121 181 118 C169 115 161 126 167 134 C172 141 182 137 179 131" />
+          <path d="M316 79 C301 74 287 82 288 93 C290 105 306 108 311 98 C314 91 307 86 303 91" />
+        </g>
+      </g>
+      <g class="cloud-study__pixels">
+        <rect x="322" y="69" width="12" height="7" />
+        <rect x="342" y="119" width="9" height="9" />
+        <rect x="369" y="111" width="7" height="7" />
+        <rect x="390" y="120" width="5" height="5" />
+        <rect x="418" y="100" width="5" height="5" />
+      </g>
+    </svg>
+  </div>
+</div>

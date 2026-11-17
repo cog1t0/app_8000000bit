@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "App 8000000bit" %></title>
+    <title><%= content_for(:title) || "8,000,000 bit" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="<%= content_for(:description) || "8,000,000 bit のウェブ実験室" %>">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
@@ -18,14 +19,20 @@
     <link rel="apple-touch-icon" href="/icon.png">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
   </head>
 
   <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
-    </main>
+    <% if content_for?(:full_bleed) %>
+      <div class="<%= yield(:main_class) %>">
+        <%= yield %>
+      </div>
+    <% else %>
+      <main class="<%= content_for?(:main_class) ? yield(:main_class) : "container mx-auto mt-28 px-5 flex" %>">
+        <%= yield %>
+      </main>
+    <% end %>
   </body>
 </html>
