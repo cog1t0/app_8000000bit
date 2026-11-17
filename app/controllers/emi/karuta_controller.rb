@@ -16,7 +16,23 @@ module Emi
         render plain: "かるたは じゅんびちゅうです。", status: :service_unavailable
         return
       end
-      send_data Rails.root.join("lib/emi_karuta/index.html").binread, type: "text/html; charset=utf-8", disposition: "inline"
+      html = Rails.root.join("lib/emi_karuta/index.html").binread.sub("KARUTA_CSRF_TOKEN", form_authenticity_token)
+      send_data html, type: "text/html; charset=utf-8", disposition: "inline"
+    end
+
+    def online
+      token = params[:ticket]
+      command = params[:command]
+      return head :bad_request unless token.is_a?(String) && token.match?(/\A[0-9a-f]{32}\z/)
+      return head :bad_request unless %w[join poll ready pick leave].include?(command)
+      name = params[:nickname]
+      if command == "join"
+        return head :bad_request unless name.is_a?(String) && name.strip.length.between?(1, 16)
+      end
+      if command == "pick"
+        return head :bad_request unless (1..46).cover?(params[:card]) && params[:round].is_a?(Integer)
+      end
+      render json: Emi::KarutaLobby.new.update(token, command, nickname: command == "join" ? name.strip : nil, card: params[:card], round: params[:round])
     end
 
     def file

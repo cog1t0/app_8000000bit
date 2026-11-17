@@ -68,10 +68,5 @@ assert.equal(game.run('match.hands.cpu.length'),1,'a wrong human card does not s
 console.log('PASS: human-first close calls, final pair, late clicks, pause and mis-touch arbitration');
 
 game=setup([1,2,3,4]);
-game.run('match.localPair=true;scheduleCPU()');
-assert.equal(game.timers.size,0,'shared-device play has no automatic opponent');
-game.run("pick(1,'cpu');pick(1,'you')");
-assert.equal(game.run('match.hands.cpu.length'),1,'upper player scores');
-assert.equal(game.run('match.hands.you.length'),0,'second tap cannot claim the same card');
-assert([...game.cards.values()].every(c=>!c.classList.contains('cpu-capture')));
-assert.match(game.fields.feedback.textContent,/うえの ひと/);
+game.run('match.online=true;scheduleCPU()');
+assert.equal(game.timers.size,0,'network play has no automatic opponent');

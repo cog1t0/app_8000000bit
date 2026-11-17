@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   namespace :emi do
     root "home#index"
     get "karuta", to: "karuta#index"
+    post "karuta/match", to: "karuta#online"
     get "karuta/files/:name", to: "karuta#file", constraints: { name: /[^\/]+/ }, format: false, as: :karuta_file
   end
 
